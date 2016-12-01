@@ -1,0 +1,14 @@
+D:\network\Junhe\BLL\bin\Debug\BLL.dll
+D:\network\Junhe\BLL\bin\Debug\BLL.pdb
+D:\network\Junhe\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\network\Junhe\BLL\obj\Debug\BLL.dll
+D:\network\Junhe\BLL\obj\Debug\BLL.pdb
+D:\network\Junhe\BLL\bin\Debug\DAL.dll
+D:\network\Junhe\BLL\bin\Debug\Model.dll
+D:\network\Junhe\BLL\bin\Debug\MyData.dll
+D:\network\Junhe\BLL\bin\Debug\NPOI.dll
+D:\network\Junhe\BLL\bin\Debug\dotnetCHARTING.dll
+D:\network\Junhe\BLL\bin\Debug\Newtonsoft.Json.dll
+D:\network\Junhe\BLL\bin\Debug\DAL.pdb
+D:\network\Junhe\BLL\bin\Debug\Model.pdb
+D:\network\Junhe\BLL\bin\Debug\MyData.pdb

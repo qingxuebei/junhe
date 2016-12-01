@@ -1,0 +1,15 @@
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\obj\Debug\MyData.csprojResolveAssemblyReference.cache
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\bin\Debug\MyData.dll
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\bin\Debug\MyData.pdb
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\obj\Debug\MyData.dll
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\obj\Debug\MyData.pdb
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\bin\Debug\Model.dll
+E:\郭伟坤\guo\养生网站\Web_YSBack\MyData\bin\Debug\Model.pdb
+D:\network\Junhe\MyData\obj\Debug\MyData.csprojResolveAssemblyReference.cache
+D:\network\Junhe\MyData\obj\Debug\MyData.dll
+D:\network\Junhe\MyData\obj\Debug\MyData.pdb
+D:\network\Junhe\MyData\obj\Debug\MyData.csproj.ResolveComReference.cache
+D:\network\Junhe\MyData\bin\Debug\MyData.dll
+D:\network\Junhe\MyData\bin\Debug\MyData.pdb
+D:\network\Junhe\MyData\bin\Debug\Model.dll
+D:\network\Junhe\MyData\bin\Debug\Model.pdb
