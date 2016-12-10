@@ -9,6 +9,7 @@
         pagination: false,
         fitColumns: true,
         showFooter: true,
+        singleSelect: true,
         //pageSize: 20,
         //pageList: [20, 30, 40, 50],
         queryParams: {
@@ -33,7 +34,7 @@
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
                             if (value) {
-                                return value = 1 ? "启用" : "禁用";
+                                if (value == 0) { return "禁用"; } else if (value == 1) { return "启用"; }
                             }
                         }
                     },
@@ -134,6 +135,6 @@ function update(index) {
         $("#txt_ProductName").val(row.ProductName);
         $("#txt_Unit").val(row.Unit);
         $('#txt_UnitPrice').numberbox('setValue', row.UnitPrice);
-        $("#txt_State").select(row.State);
+        $("#txt_State").combobox("setValue", row.State);
     }
 }

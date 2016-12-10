@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Agents.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DictBank.cs" />
     <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

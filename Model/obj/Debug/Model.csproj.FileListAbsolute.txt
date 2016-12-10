@@ -2,3 +2,4 @@ D:\network\Junhe\Model\bin\Debug\Model.dll
 D:\network\Junhe\Model\bin\Debug\Model.pdb
 D:\network\Junhe\Model\obj\Debug\Model.dll
 D:\network\Junhe\Model\obj\Debug\Model.pdb
+D:\network\Junhe\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

@@ -211,6 +211,7 @@
   <ItemGroup>
     <Content Include="App_Code\BuildSql.cs" />
     <Content Include="App_Code\SqlHelper.cs" />
+    <Content Include="App_Code\CommonEnums.cs" />
     <Compile Include="ashx\agents.ashx.cs">
       <DependentUpon>agents.ashx</DependentUpon>
     </Compile>

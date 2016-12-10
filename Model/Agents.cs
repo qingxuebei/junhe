@@ -65,6 +65,8 @@ namespace Model
 
         public int State { get; set; }
 
+        public int AgentsStatus { get; set; }
+
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -34,6 +35,15 @@ namespace Web.ashx
                     case "delete":
                         context.Response.Write(del(context));
                         break;
+                    case "getBank":
+                        context.Response.Write(getBank(context));
+                        break;
+                    case "getAgents":
+                        context.Response.Write(getAgents(context));
+                        break;
+                    case "getRegion":
+                        context.Response.Write(getRegion(context));
+                        break;
 
                 }
             }
@@ -58,6 +68,37 @@ namespace Web.ashx
         public virtual String del(HttpContext context)
         {
             return null;
+        }
+        public String getBank(HttpContext context)
+        {
+            DataTable dt = new BLL.DictBankBLL().getBank(" and State=1");
+            return MyData.Utils.EasuuiComboxJson(dt);
+        }
+        public String getAgents(HttpContext context)
+        {
+            DataTable dt = new BLL.AgentsBLL().GetAgents(" and State=1");
+            return MyData.Utils.EasuuiComboxJson(dt);
+
+        }
+        public String getRegion(HttpContext context)
+        {
+            String strWhere = " and State=1 ";
+            String st = context.Request.Params["st"].ToString();
+            if (st == "p")
+            {
+                strWhere += " and ParentCode=''";
+            }
+            else if (st == "reload")
+            {
+                strWhere += "and ParentCode!=''";
+            }
+            else
+            {
+                String id = context.Request.Params["id"].ToString();
+                strWhere += " and ParentCode='" + id + "'";
+            }
+            DataTable dt = new BLL.DictRegionBLL().getRegion(strWhere);
+            return MyData.Utils.EasuuiComboxJson(dt);
         }
 
         public bool IsReusable

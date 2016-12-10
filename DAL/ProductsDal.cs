@@ -12,7 +12,7 @@ namespace DAL
     {
         public DataTable GetAllProducts(Model.Products products)
         {
-            String sql = "select * from Products where State=1 ";
+            String sql = "select * from Products where 1=1 ";
             if (!String.IsNullOrWhiteSpace(products.ProductName))
             {
                 sql += " and ProductName='" + products.ProductName + "'";

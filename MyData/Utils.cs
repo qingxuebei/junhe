@@ -10,7 +10,7 @@ using Model;
 
 namespace MyData
 {
-    public  class Utils
+    public class Utils
     {
         #region 将字符串转换为数组
         public static string[] GetStrArray(string str)
@@ -396,6 +396,10 @@ namespace MyData
 
 
         #region EasyUI
+        public static string EasuuiComboxJson(DataTable ds)
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ds);
+        }
         public static string EasyuiDataGridJson(DataTable ds)
         {
             int num = ds.Rows.Count;
@@ -409,7 +413,7 @@ namespace MyData
         {
             return "{ \"total\":" + total + ",\"rows\":" + Newtonsoft.Json.JsonConvert.SerializeObject(ds) + ",\"footer\":[" + footer.Replace("'", "\"") + "]}";
         }
-       
+
         #endregion
 
         public static DataTable PageDataTable(DataTable dt, int rows, int page)
@@ -430,7 +434,7 @@ namespace MyData
                     dt.Rows.RemoveAt(0);
                 }
 
-                for (; ; )
+                for (;;)
                 {
                     if (dt.Rows.Count <= rows)
                         break;
@@ -607,7 +611,7 @@ namespace MyData
                     for (int f = 0; f < dtl.Rows.Count; f++)
                     {//复制被合并表余下所有数据
                         DataRow drNew = dtLs.NewRow();
-                        for ( int l = 0;   l < dtl.Columns.Count; l++)
+                        for (int l = 0; l < dtl.Columns.Count; l++)
                         {
                             drNew[dtl.Columns[l].ColumnName] = dtl.Rows[f][l];
                         }
@@ -655,5 +659,7 @@ namespace MyData
             footer += "}";
             return footer;
         }
+        public static string getAgentsId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
+        public static string getAgencyId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
     }
 }
