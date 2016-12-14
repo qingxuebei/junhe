@@ -12,3 +12,17 @@ D:\network\Junhe\BLL\bin\Debug\Newtonsoft.Json.dll
 D:\network\Junhe\BLL\bin\Debug\DAL.pdb
 D:\network\Junhe\BLL\bin\Debug\Model.pdb
 D:\network\Junhe\BLL\bin\Debug\MyData.pdb
+F:\工作\junhe\BLL\bin\Debug\BLL.dll
+F:\工作\junhe\BLL\bin\Debug\BLL.pdb
+F:\工作\junhe\BLL\bin\Debug\DAL.dll
+F:\工作\junhe\BLL\bin\Debug\Model.dll
+F:\工作\junhe\BLL\bin\Debug\MyData.dll
+F:\工作\junhe\BLL\bin\Debug\NPOI.dll
+F:\工作\junhe\BLL\bin\Debug\dotnetCHARTING.dll
+F:\工作\junhe\BLL\bin\Debug\Newtonsoft.Json.dll
+F:\工作\junhe\BLL\bin\Debug\DAL.pdb
+F:\工作\junhe\BLL\bin\Debug\Model.pdb
+F:\工作\junhe\BLL\bin\Debug\MyData.pdb
+F:\工作\junhe\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+F:\工作\junhe\BLL\obj\Debug\BLL.dll
+F:\工作\junhe\BLL\obj\Debug\BLL.pdb

@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencys.cs" />
     <Compile Include="Agents.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DictBank.cs" />
+    <Compile Include="Orders.cs" />
+    <Compile Include="OrdersDetail.cs" />
     <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

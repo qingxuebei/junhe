@@ -96,6 +96,7 @@ namespace DAL
                                     , agents.State, agents.AgentsStatus);
             return DataBase.Base_cmd(sql);
         }
+
         public bool Update(Model.Agents agents)
         {
             String sql = @"UPDATE [dbo].[Agents]
@@ -130,6 +131,18 @@ namespace DAL
                                 , agents.Phone
                                 , agents.UpdateTime
                                 , agents.UpdatePerson, agents.Id);
+            return DataBase.Base_cmd(sql);
+        }
+
+        public bool IsAgents(String agentsId)
+        {
+            int count = MyData.DataBase.Base_count(" Agents", " Id='" + agentsId + "' and AgentsStatus=0 and State!=0");
+            return count > 0 ? true : false;
+        }
+
+        public bool UpdateAgents(Model.Agents agents)
+        {
+            String sql = "update [dbo].[Agents] set Rank='" + agents.Rank + "',CareerStatus='" + agents.CareerStatus + "',State='" + agents.State + "' where Id='" + agents.Id + "'";
             return DataBase.Base_cmd(sql);
         }
     }

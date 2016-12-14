@@ -33,6 +33,12 @@
                             "icon": "icon-nav",
                             "url": "/details/agents.aspx"
                         },
+                        {
+                            "menuid": "3",
+                            "menuname": "代理商管理",
+                            "icon": "icon-nav",
+                            "url": "/details/agencys.aspx"
+                        },
                     ]
                 },
 	            {

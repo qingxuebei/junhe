@@ -58,7 +58,7 @@ namespace Web.ashx
                 agents.Name = context.Request["Name"].ToString().Trim();
                 agents.Phone = context.Request["Phone"].ToString().Trim();
                 agents.RefereeId = context.Request["RefereeId"].ToString().Trim();
-                agents.State = 1;
+                agents.State = Convert.ToInt32(MyData.AgentsState.新添加);
                 agents.ZipCode = context.Request["ZipCode"].ToString().Trim();
                 agents.JoinDate = Convert.ToDateTime(context.Request["JoinDate"].ToString().Trim());
 
@@ -69,7 +69,7 @@ namespace Web.ashx
 
                 agents.CareerStatus = "A";//新用户进来事业状态为A
                 agents.Rank = "S1";//新用户进来职级都为S1
-                agents.AgentsStatus = 0;//0代表代理人
+                agents.AgentsStatus = Convert.ToInt32(MyData.AgentsStatus.代理人);//0代表代理人
 
                 if (new BLL.AgentsBLL().Insert(agents))
                 {
@@ -79,7 +79,7 @@ namespace Web.ashx
             }
             catch (Exception ex)
             {
-
+                
             }
             return "添加失败！";
         }

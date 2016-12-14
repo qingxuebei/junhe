@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CommonEnums
+namespace MyData
 {
     public enum CareerStatus
     {
@@ -17,4 +18,11 @@ namespace CommonEnums
         代理商 = 1,
         合伙人 = 2
     }
+    public enum AgentsState
+    {
+        新添加 = -1,
+        已过期 = 0,
+        正常 = 1
+    }
 }
+

@@ -13,3 +13,6 @@ D:\network\Junhe\MyData\bin\Debug\MyData.dll
 D:\network\Junhe\MyData\bin\Debug\MyData.pdb
 D:\network\Junhe\MyData\bin\Debug\Model.dll
 D:\network\Junhe\MyData\bin\Debug\Model.pdb
+F:\工作\junhe\MyData\obj\Debug\MyData.csprojResolveAssemblyReference.cache
+F:\工作\junhe\MyData\obj\Debug\MyData.dll
+F:\工作\junhe\MyData\obj\Debug\MyData.pdb
