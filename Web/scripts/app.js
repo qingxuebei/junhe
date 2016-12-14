@@ -74,3 +74,16 @@ function numIsNull(num) {
         return num;
 }
 
+function IsThisYearMonth(yearMonth) {
+    if (yearMonth == null || yearMonth == "") {
+        return false;
+    }
+    var date = new Date;
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" + month : month);
+    var mydate = (year.toString() + month.toString());
+    if (mydate == yearMonth) { return true; }
+    return false;
+}
+

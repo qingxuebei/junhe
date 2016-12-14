@@ -49,6 +49,7 @@
     <Compile Include="DictBankDal.cs" />
     <Compile Include="DictRegionDal.cs" />
     <Compile Include="OrdersDal.cs" />
+    <Compile Include="OrdersDetailDal.cs" />
     <Compile Include="ProductsDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

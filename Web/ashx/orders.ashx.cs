@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+
+namespace Web.ashx
+{
+    /// <summary>
+    /// orders 的摘要说明
+    /// </summary>
+    public class orders : Base
+    {
+
+        public override String get(HttpContext context)
+        {
+            int pageRows, page; String order = "";
+            pageRows = 20;
+            page = 1;
+            BLL.OrdersBLL orderBLL = new BLL.OrdersBLL();
+            String strWhere = " 1=1";
+            string[] st = context.Request.Params["wherestr"].ToString().Split(',');
+            if (!String.IsNullOrWhiteSpace(st[0]))
+            {
+                strWhere += " and AgentId='" + st[0] + "'";
+            }
+            if (null != context.Request["rows"])
+            {
+                pageRows = int.Parse(context.Request["rows"].ToString().Trim());
+            }
+            if (null != context.Request["page"])
+            {
+                page = int.Parse(context.Request["page"].ToString().Trim());
+            }
+            if (null != context.Request["sort"])
+            {
+                order = context.Request["sort"].ToString().Trim();
+            }
+
+            //调用分页的GetList方法  
+            DataTable dt = orderBLL.GetListByPage(strWhere.ToString(), order, (page - 1) * pageRows + 1, page * pageRows);
+            int count = orderBLL.GetRecordCount(strWhere.ToString());//获取条数  
+            return MyData.Utils.EasyuiDataGridJson(dt, count);
+        }
+        public override String add(HttpContext context)
+        {
+            return "添加失败！";
+        }
+        public override String update(HttpContext context)
+        {
+            try
+            {
+                String id = context.Request.Params["id"].ToString();
+                String agentsId = context.Request.Params["agentsId"].ToString();
+                if (String.IsNullOrWhiteSpace(id) || String.IsNullOrWhiteSpace(agentsId)) { return "作废失败"; }
+                Model.Orders orders = new Model.Orders();
+                orders.AgentId = agentsId;
+                orders.Id = id;
+                if (new BLL.OrdersBLL().Update(orders)) { return "0"; }
+                else return "修改失败";
+
+            }
+            catch (Exception ex) { }
+
+            return "修改失败！";
+        }
+        public override String del(HttpContext context)
+        {
+            return null;
+        }
+    }
+}

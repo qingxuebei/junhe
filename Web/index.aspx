@@ -39,6 +39,12 @@
                             "icon": "icon-nav",
                             "url": "/details/agencys.aspx"
                         },
+                        {
+                            "menuid": "3",
+                            "menuname": "订单管理",
+                            "icon": "icon-nav",
+                            "url": "/details/orders.aspx"
+                        },
                     ]
                 },
 	            {

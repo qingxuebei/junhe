@@ -81,7 +81,7 @@
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
                             if (value) {
-                                return value == 0 ? "删除" : "正常";
+                                return value == 0 ? "已删除" : "正常";
                             }
                         }
                     },

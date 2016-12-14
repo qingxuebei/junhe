@@ -44,7 +44,9 @@ namespace Web.ashx
                     case "getRegion":
                         context.Response.Write(getRegion(context));
                         break;
-
+                    case "getDetailByOrdersId":
+                        context.Response.Write(getDetailByOrdersId(context));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -99,6 +101,18 @@ namespace Web.ashx
             }
             DataTable dt = new BLL.DictRegionBLL().getRegion(strWhere);
             return MyData.Utils.EasuuiComboxJson(dt);
+        }
+        public String getDetailByOrdersId(HttpContext context)
+        {
+            Model.OrdersDetail ordersDetail = new Model.OrdersDetail();
+            String orderId= context.Request.Params["orderId"].ToString();
+            if (!String.IsNullOrWhiteSpace(orderId))
+            {
+                ordersDetail.OrdersId = orderId;
+            }
+            else { ordersDetail.OrdersId = ""; }
+            DataTable dt = new BLL.OrdersDetailBLL().GetByOrdersId(ordersDetail);
+            return MyData.Utils.EasyuiDataGridJson(dt);
         }
 
         public bool IsReusable

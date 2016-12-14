@@ -34,7 +34,7 @@
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
                             if (value) {
-                                if (value == 0) { return "禁用"; } else if (value == 1) { return "启用"; }
+                                return value == 0 ? "已禁用" : "正常";
                             }
                         }
                     },
