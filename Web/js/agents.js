@@ -48,20 +48,12 @@
                     { field: 'Name', title: '姓名', width: 100, align: 'left' },
                     {
                         field: 'Birthday', title: '生日', width: 100, align: 'left',
-                        formatter: function (value, row, index) {
-                            if (value) {
-                                return value.toString().substring(0, 10);
-                            }
-                        }
+                        formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
                     },
                     { field: 'CareerStatus', title: '事业状态', width: 100, align: 'left' },
                     {
                         field: 'JoinDate', title: '加入日期', width: 100, align: 'left',
-                        formatter: function (value, row, index) {
-                            if (value) {
-                                return value.toString().substring(0, 10);
-                            }
-                        }
+                        formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
                     },
                     { field: 'Rank', title: '职级', width: 100, align: 'left' },
                     { field: 'RefereeId', title: '推荐人编号', width: 100, align: 'left' },
@@ -80,8 +72,12 @@
                     {
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
-                            if (value) {
-                                return value == 0 ? "已删除" : "正常";
+                            if (value == -1) {
+                                return "新添加";
+                            } else if (value == 0) {
+                                return "已过期";
+                            } else if (value == 1) {
+                                return "正常";
                             }
                         }
                     },

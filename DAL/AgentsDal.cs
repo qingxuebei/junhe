@@ -13,7 +13,7 @@ namespace DAL
     {
         public DataTable GetAgents(String strWhere)
         {
-            String sql = "select Id,(Id+'--'+Name) as Name,Name as AgentsName,AgencyId,AgencyName from Agents where 1=1" + strWhere;
+            String sql = "select Id,(Id+'--'+Name) as Name,Name as AgentsName,AgencyId,AgencyName,Rank,CareerStatus,State from Agents where 1=1" + strWhere;
             return DataBase.Base_dt(sql);
         }
         public DataTable GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
@@ -115,7 +115,7 @@ namespace DAL
                               ,[Phone] =  '{12}'
                               ,[UpdateTime] =  '{13}'
                               ,[UpdatePerson] =  '{14}'
-                         WHERE Id='{16}'";
+                         WHERE Id='{15}'";
             sql = String.Format(sql, agents.Name
                                 , agents.Province
                                 , agents.City

@@ -96,10 +96,12 @@
   <ItemGroup>
     <Content Include="details\agencys.aspx" />
     <Content Include="details\agents.aspx" />
+    <Content Include="details\hzorders.aspx" />
     <Content Include="details\orders.aspx" />
     <Content Include="details\products.aspx" />
     <Content Include="js\agencys.js" />
     <Content Include="js\agents.js" />
+    <Content Include="js\hzorders.js" />
     <Content Include="js\orders.js" />
     <Content Include="js\products.js" />
     <Content Include="packages.config" />
@@ -110,6 +112,7 @@
     <Content Include="ashx\agents.ashx" />
     <Content Include="ashx\agencys.ashx" />
     <Content Include="ashx\orders.ashx" />
+    <Content Include="ashx\ordersdetail.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -229,6 +232,9 @@
     <Compile Include="ashx\orders.ashx.cs">
       <DependentUpon>orders.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx\ordersdetail.ashx.cs">
+      <DependentUpon>ordersdetail.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\products.ashx.cs">
       <DependentUpon>products.ashx</DependentUpon>
     </Compile>
@@ -245,6 +251,13 @@
     </Compile>
     <Compile Include="details\agents.aspx.designer.cs">
       <DependentUpon>agents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="details\hzorders.aspx.cs">
+      <DependentUpon>hzorders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="details\hzorders.aspx.designer.cs">
+      <DependentUpon>hzorders.aspx</DependentUpon>
     </Compile>
     <Compile Include="details\orders.aspx.cs">
       <DependentUpon>orders.aspx</DependentUpon>

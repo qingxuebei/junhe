@@ -26,5 +26,13 @@ namespace BLL
             ProductsDal productDal = new ProductsDal();
             return productDal.Update(products);
         }
+        public DataTable getProducts()
+        {
+            return new DAL.ProductsDal().getProducts();
+        }
+        public DataTable getProductsById(String id)
+        {
+            return new DAL.ProductsDal().getProductsById(id);
+        }
     }
 }

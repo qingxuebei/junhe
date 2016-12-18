@@ -24,5 +24,15 @@ namespace MyData
         已过期 = 0,
         正常 = 1
     }
+    public enum OrdersState
+    {
+        已作废 = 0,
+        正常 = 1
+    }
+    public enum OrdersDetailState
+    {
+        添加中 = -1,
+        正常 = 1
+    }
 }
 

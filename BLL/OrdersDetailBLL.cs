@@ -14,5 +14,21 @@ namespace BLL
             DAL.OrdersDetailDal ordersDetailDal = new DAL.OrdersDetailDal();
             return ordersDetailDal.GetByOrdersId(ordersDetail);
         }
+        public bool Insert(Model.OrdersDetail ordersdetail)
+        {
+            return new DAL.OrdersDetailDal().Insert(ordersdetail);
+        }
+        public bool Delete(String id)
+        {
+            return new DAL.OrdersDetailDal().Delete(id);
+        }
+        public DataTable HuiZongOrdersDetail(int yearMonth)
+        {
+            return new DAL.OrdersDetailDal().HuiZongOrdersDetail(yearMonth);
+        }
+        public DataTable HuiZongOrders(int yearMonth)
+        {
+            return new DAL.OrdersDetailDal().HuiZongOrders(yearMonth);
+        }
     }
 }

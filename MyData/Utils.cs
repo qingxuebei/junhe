@@ -661,5 +661,7 @@ namespace MyData
         }
         public static string getAgentsId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
         public static string getAgencyId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
+
+        public static Int32 getYearMonth() { return Convert.ToInt32(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()); }
     }
 }

@@ -29,16 +29,16 @@
                         },
                         {
                             "menuid": "3",
-                            "menuname": "代理人管理",
+                            "menuname": "会员管理",
                             "icon": "icon-nav",
                             "url": "/details/agents.aspx"
                         },
-                        {
-                            "menuid": "3",
-                            "menuname": "代理商管理",
-                            "icon": "icon-nav",
-                            "url": "/details/agencys.aspx"
-                        },
+                        //{
+                        //    "menuid": "3",
+                        //    "menuname": "代理商管理",
+                        //    "icon": "icon-nav",
+                        //    "url": "/details/agencys.aspx"
+                        //},
                         {
                             "menuid": "3",
                             "menuname": "订单管理",
@@ -50,12 +50,12 @@
 	            {
 	                "menuid": "2",
 	                "icon": "icon-sys",
-	                "menuname": "系统管理",
+	                "menuname": "数据汇总",
 	                "menus": [{
 	                    "menuid": "21",
-	                    "menuname": "员工列表",
+	                    "menuname": "订单汇总",
 	                    "icon": "icon-nav",
-	                    "url": "demo.html"
+	                    "url": "/details/hzorders.aspx"
 	                }]
 	            }]
         };

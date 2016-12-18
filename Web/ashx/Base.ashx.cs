@@ -47,6 +47,15 @@ namespace Web.ashx
                     case "getDetailByOrdersId":
                         context.Response.Write(getDetailByOrdersId(context));
                         break;
+                    case "getProducts":
+                        context.Response.Write(getProducts(context));
+                        break;
+                    case "HuiZongOrdersDetail":
+                        context.Response.Write(HuiZongOrdersDetail(context));
+                        break;
+                    case "HuiZongOrders":
+                        context.Response.Write(HuiZongOrders(context));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -78,9 +87,14 @@ namespace Web.ashx
         }
         public String getAgents(HttpContext context)
         {
-            DataTable dt = new BLL.AgentsBLL().GetAgents(" and State=1");
+            DataTable dt = new BLL.AgentsBLL().GetAgents(" and State!=0");
             return MyData.Utils.EasuuiComboxJson(dt);
 
+        }
+        public String getProducts(HttpContext context)
+        {
+            DataTable dt = new BLL.ProductsBLL().getProducts();
+            return MyData.Utils.EasuuiComboxJson(dt);
         }
         public String getRegion(HttpContext context)
         {
@@ -105,7 +119,7 @@ namespace Web.ashx
         public String getDetailByOrdersId(HttpContext context)
         {
             Model.OrdersDetail ordersDetail = new Model.OrdersDetail();
-            String orderId= context.Request.Params["orderId"].ToString();
+            String orderId = context.Request.Params["orderId"].ToString();
             if (!String.IsNullOrWhiteSpace(orderId))
             {
                 ordersDetail.OrdersId = orderId;
@@ -113,6 +127,26 @@ namespace Web.ashx
             else { ordersDetail.OrdersId = ""; }
             DataTable dt = new BLL.OrdersDetailBLL().GetByOrdersId(ordersDetail);
             return MyData.Utils.EasyuiDataGridJson(dt);
+        }
+        public String HuiZongOrdersDetail(HttpContext context)
+        {
+            String yearMonth = context.Request.Params["yearMonth"].ToString();
+            if (!String.IsNullOrWhiteSpace(yearMonth))
+            {
+                DataTable dt = new BLL.OrdersDetailBLL().HuiZongOrdersDetail(Convert.ToInt32(yearMonth));
+                return MyData.Utils.EasyuiDataGridJson(dt);
+            }
+            return null;
+        }
+        public String HuiZongOrders(HttpContext context)
+        {
+            String yearMonth = context.Request.Params["yearMonth"].ToString();
+            if (!String.IsNullOrWhiteSpace(yearMonth))
+            {
+                DataTable dt = new BLL.OrdersDetailBLL().HuiZongOrders(Convert.ToInt32(yearMonth));
+                return MyData.Utils.EasyuiDataGridJson(dt);
+            }
+            return null;
         }
 
         public bool IsReusable

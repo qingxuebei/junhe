@@ -39,6 +39,8 @@ namespace Model
 
         public string UpdatePerson { get; set; }
 
+        public Int32 State { get; set; }
+
     }
 
 }

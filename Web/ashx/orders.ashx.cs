@@ -44,6 +44,29 @@ namespace Web.ashx
         }
         public override String add(HttpContext context)
         {
+            Model.Orders orders = new Model.Orders();
+            String AgentId = context.Request.Params["AgentId"].ToString();
+            String Price = context.Request.Params["Price"].ToString();
+            String OrdersId = context.Request.Params["OrdersId"].ToString();
+            DataTable dt = new BLL.AgentsBLL().GetAgents(" and Id='" + AgentId + "'");
+            if (dt.Rows.Count == 0)
+            {
+                return "代理人不存在";
+            }
+            orders.Id = OrdersId;
+            orders.Price = Convert.ToDecimal(Price);
+            orders.AgentName = dt.Rows[0]["AgentsName"].ToString();
+            orders.State = Convert.ToInt32(MyData.OrdersState.正常);
+            orders.AgentId = AgentId;
+            orders.CreatePerson = userName;
+            orders.CreateTime = DateTime.Now;
+            orders.UpdatePerson = userName;
+            orders.UpdateTime = DateTime.Now;
+            orders.YearMonth = MyData.Utils.getYearMonth();
+            if (new BLL.OrdersBLL().Insert(orders))
+            {
+                return "0";
+            }
             return "添加失败！";
         }
         public override String update(HttpContext context)

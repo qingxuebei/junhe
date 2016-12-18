@@ -63,9 +63,9 @@
                     {
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
-                            if (value) {
-                                return value == 0 ? "已删除" : "正常";
-                            }
+                            if (value == 0) {
+                                return "已删除";
+                            } else if (value == 1) { return "正常"; }
                         }
                     },
                     {
@@ -90,5 +90,5 @@
 });
 
 function detail(index) {
-    
+
 }

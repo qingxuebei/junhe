@@ -41,5 +41,15 @@ namespace DAL
             return DataBase.Base_cmd(sql);
 
         }
+        public DataTable getProducts()
+        {
+            String sql = "select * from Products where state=1";
+            return DataBase.Base_dt(sql);
+        }
+        public DataTable getProductsById(String id)
+        {
+            String sql = "select * from Products where Id='" + id + "'";
+            return DataBase.Base_dt(sql);
+        }
     }
 }

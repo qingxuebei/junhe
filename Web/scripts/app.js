@@ -1,31 +1,4 @@
-﻿document.onkeydown = function (event) {
-    var e = event || window.event || arguments.callee.caller.arguments[0];
-    var d = e.srcElement || e.target;
-    if (e && e.keyCode == 8) {
-        var dss = d.tagName.toUpperCase();
-        return d.tagName.toUpperCase() == 'INPUT' || d.tagName.toUpperCase() == 'TEXTAREA' ? true : false
-    }
-}
-
-$.postJSON = function (url, data, success, error) {
-    return $.ajax({
-        'type': 'POST',
-        'url': url,
-        'contentType': 'application/json',
-        'data': JSON.stringify(data),
-        'dataType': 'json',
-        'success': success,
-        'error': function (data) {
-            if (error) {
-                error(data.responseJSON)
-            }
-            else {
-                $.messager.alert('提醒', data.responseJSON.Info.Message, 'info');
-                //alert(data.responseJSON.Info.Message);
-            }
-        }
-    });
-};
+﻿
 
 //获取数据库时间（年月日）
 function ShortDatetime(time) {

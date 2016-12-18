@@ -10,7 +10,7 @@ namespace DAL
 {
     public class OrdersDal
     {
-        public bool Insert(Model.Orders orders, List<Model.OrdersDetail> ordersDetailList)
+        public bool Insert(Model.Orders orders)
         {
             String sql1 = @"INSERT INTO [dbo].[Orders]
                            ([Id]
@@ -25,27 +25,8 @@ namespace DAL
                            ,[State])
                      VALUES ('{0}','{1}','{2}','{3}',{4},'{5}','{6}','{7}','{8}',{9});";
             sql1 = String.Format(sql1, orders.Id, orders.AgentId, orders.AgentName, orders.YearMonth, orders.Price, orders.CreateTime, orders.CreatePerson, orders.UpdateTime, orders.UpdatePerson, orders.State);
-
-            String sql2 = @"INSERT INTO [dbo].[OrdersDetail]
-                           ([Id]
-                           ,[OrdersId]
-                           ,[ProductId]
-                           ,[ProductName]
-                           ,[UnitPrice]
-                           ,[Num]
-                           ,[Price]
-                           ,[CreateTime]
-                           ,[CreatePerson]
-                           ,[UpdateTime]
-                           ,[UpdatePerson])
-                     VALUES ";
-            foreach (Model.OrdersDetail ordersdetail in ordersDetailList)
-            {
-                sql2 += " ('{0}','{1}','{2}','{3}',{4},{5},{6},'{7}','{8}','{9}','{10}' ),";
-                sql2 = String.Format(sql2, ordersdetail.Id, ordersdetail.OrdersId, ordersdetail.ProductId, ordersdetail.ProductName, ordersdetail.UnitPrice, ordersdetail.Num,
-                    ordersdetail.Price, ordersdetail.CreateTime, ordersdetail.CreatePerson, ordersdetail.UpdateTime, ordersdetail.UpdatePerson);
-            }
-            sql2 = sql2.TrimEnd(',') + ";";
+            
+            String sql2 = "update OrdersDetail set State=1 where OrdersId='" + orders.Id + "'";
             return MyData.DataBase.Base_cmd(sql1 + sql2);
         }
 
@@ -84,8 +65,9 @@ namespace DAL
         }
         public bool Update(Model.Orders orders)
         {
-            String sql = "update Orders set State=0 where Id='" + orders.Id + "'";
-            return DataBase.Base_cmd(sql);
+            String sql = "update Orders set State=0 where Id='" + orders.Id + "';";
+            String sql2 = "update OrdersDetail set State=0 where OrdersId='" + orders.Id + "'";
+            return DataBase.Base_cmd(sql + sql2);
         }
     }
 }

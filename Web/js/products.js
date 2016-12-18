@@ -24,18 +24,14 @@
                     { field: 'CreatePerson', title: '创建人', width: 100, align: 'left' },
                     {
                         field: 'CreateTime', title: '创建时间', width: 100, align: 'left',
-                        formatter: function (value, row, index) {
-                            if (value) {
-                                return value.toString().substring(0, 10);
-                            }
-                        }
+                        formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
                     },
                     {
                         field: 'State', title: '状态', width: 100, align: 'left',
                         formatter: function (value, row, index) {
-                            if (value) {
-                                return value == 0 ? "已禁用" : "正常";
-                            }
+                            if (value == 0) {
+                                return "已禁用";
+                            } else if (value == 1) { return "正常"; }
                         }
                     },
                     {

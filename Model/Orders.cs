@@ -35,11 +35,7 @@ namespace Model
 
         public string UpdatePerson { get; set; }
 
-        public string State { get; set; }
-
-
-
-        public virtual Agents Agents { get; set; }
+        public Int32 State { get; set; }
 
     }
 
