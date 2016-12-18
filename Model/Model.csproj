@@ -45,6 +45,7 @@
     <Compile Include="Agents.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DictBank.cs" />
+    <Compile Include="Income.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="OrdersDetail.cs" />
     <Compile Include="Products.cs" />

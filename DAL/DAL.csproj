@@ -48,6 +48,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DictBankDal.cs" />
     <Compile Include="DictRegionDal.cs" />
+    <Compile Include="IncomeDal.cs" />
     <Compile Include="OrdersDal.cs" />
     <Compile Include="OrdersDetailDal.cs" />
     <Compile Include="ProductsDal.cs" />
