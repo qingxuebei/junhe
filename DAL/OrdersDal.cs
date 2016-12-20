@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace DAL
 {
     public class OrdersDal
     {
-        public bool Insert(Model.Orders orders)
+        public bool Insert(Model.Orders orders, OleDbTransaction tr)
         {
             String sql1 = @"INSERT INTO [dbo].[Orders]
                            ([Id]
@@ -22,17 +23,18 @@ namespace DAL
                            ,[CreatePerson]
                            ,[UpdateTime]
                            ,[UpdatePerson]
-                           ,[State])
-                     VALUES ('{0}','{1}','{2}','{3}',{4},'{5}','{6}','{7}','{8}',{9});";
-            sql1 = String.Format(sql1, orders.Id, orders.AgentId, orders.AgentName, orders.YearMonth, orders.Price, orders.CreateTime, orders.CreatePerson, orders.UpdateTime, orders.UpdatePerson, orders.State);
-            
+                           ,[State],[YearMonthDate])
+                     VALUES ('{0}','{1}','{2}','{3}',{4},'{5}','{6}','{7}','{8}',{9},'{10}');";
+            sql1 = String.Format(sql1, orders.Id, orders.AgentId, orders.AgentName, orders.YearMonth, orders.Price, orders.CreateTime, orders.CreatePerson, orders.UpdateTime, orders.UpdatePerson, orders.State, orders.YearMonthDate);
+
             String sql2 = "update OrdersDetail set State=1 where OrdersId='" + orders.Id + "'";
-            return MyData.DataBase.Base_cmd(sql1 + sql2);
+            MyData.DataBase.Base_cmd(sql1 + sql2, tr);
+            return true;
         }
 
-        public Decimal SumPrice(String agnetsId)
+        public Decimal SumPrice(String str_sql)
         {
-            String sql = "select sum(Price) from Orders where AgentId='" + agnetsId + "'";
+            String sql = "select sum(Price) from Orders where State=1 " + str_sql;
             return Convert.ToDecimal(MyData.DataBase.Base_Scalar(sql));
         }
 

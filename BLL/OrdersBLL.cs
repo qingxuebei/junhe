@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,10 @@ namespace BLL
         public bool Insert(Model.Orders orders)
         {
             DAL.OrdersDal ordersDal = new DAL.OrdersDal();
+            OleDbConnection conn = MyData.DataBase.Conn();
+            OleDbTransaction tr = conn.BeginTransaction();
             //先把订单添加到数据库
-            ordersDal.Insert(orders);
+            ordersDal.Insert(orders,tr);
 
             return UpdateAgents(ordersDal, orders);
         }
@@ -64,6 +67,33 @@ namespace BLL
                 return new DAL.AgentsDal().UpdateAgents(agents);
             }
             return false;
+        }
+
+        public Decimal getCurrentPrice(String agentId)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate>'" + MyData.Utils.getMonthFirstDay() + "'");
+        }
+        public Decimal getOneMonthPrice(String agentId)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
+                + MyData.Utils.getMonthFirstDay().AddMonths(-1) + "' and '"
+                + MyData.Utils.getMonthFirstDay() + "'");
+        }
+        public Decimal getThreeMonthPrice(String agentId)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
+                + MyData.Utils.getMonthFirstDay().AddMonths(-3) + "' and '"
+                + MyData.Utils.getMonthFirstDay() + "'");
+        }
+        public Decimal getSixMonthPrice(String agentId)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
+                + MyData.Utils.getMonthFirstDay().AddMonths(-6) + "' and '"
+                + MyData.Utils.getMonthFirstDay() + "'");
+        }
+        public Decimal getAllMonthPrice(String agentId)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "'");
         }
     }
 }

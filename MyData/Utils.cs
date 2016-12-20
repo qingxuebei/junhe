@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Data;
 using Model;
+using System.Reflection;
 
 namespace MyData
 {
@@ -663,5 +664,71 @@ namespace MyData
         public static string getAgencyId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
 
         public static Int32 getYearMonth() { return Convert.ToInt32(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()); }
+
+        /// <summary>
+        /// DataTable to List
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static IList<T> ConvertToList<T>(DataTable dt) where T : new()
+        {
+
+            IList<T> ts = new List<T>();// 定义集合
+            Type type = typeof(T); // 获得此模型的类型
+            string tempName = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                T t = new T();
+                PropertyInfo[] propertys = t.GetType().GetProperties();// 获得此模型的公共属性
+                foreach (PropertyInfo pi in propertys)
+                {
+                    tempName = pi.Name;
+                    if (dt.Columns.Contains(tempName))
+                    {
+                        if (!pi.CanWrite) continue;
+                        object value = dr[tempName];
+                        if (value != DBNull.Value)
+                            pi.SetValue(t, value, null);
+                    }
+                }
+                ts.Add(t);
+            }
+            return ts;
+        }
+        /// <summary>  
+        /// 通过DataRow 填充实体  
+        /// </summary>  
+        /// <typeparam name="T"></typeparam>  
+        /// <param name="dr"></param>  
+        /// <returns></returns>  
+        public static T GetModelByDataRow<T>(System.Data.DataRow dr) where T : new()
+        {
+            T model = new T();
+            foreach (PropertyInfo pInfo in model.GetType().GetProperties())
+            {
+                object val = getValueByColumnName(dr, pInfo.Name);
+                pInfo.SetValue(model, val, null);
+            }
+            return model;
+        }
+
+        //返回DataRow 中对应的列的值。  
+        public static object getValueByColumnName(System.Data.DataRow dr, string columnName)
+        {
+            if (dr.Table.Columns.IndexOf(columnName) >= 0)
+            {
+                if (dr[columnName] == DBNull.Value)
+                    return null;
+                return dr[columnName];
+            }
+            return null;
+        }
+        public static DateTime getMonthFirstDay()
+        {
+            DateTime now = DateTime.Now;
+            DateTime d1 = new DateTime(now.Year, now.Month, 1);
+            return d1;
+        }
     }
 }

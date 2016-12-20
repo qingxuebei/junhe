@@ -34,5 +34,9 @@ namespace MyData
         添加中 = -1,
         正常 = 1
     }
+    public enum IncomeState
+    {
+        正常 = 1
+    }
 }
 

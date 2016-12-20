@@ -77,6 +77,25 @@ namespace MyData
             conn.Close();
             return Dt;
         }
+        public static List<T> Base_list<T>(String str_sql) where T : new()
+        {
+            DataTable dt = Base_dt(str_sql);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return MyData.Utils.ConvertToList<T>(dt).ToList();
+            }
+            return null;
+        }
+
+        public static T Base_getFirst<T>(String str_sql) where T : new()
+        {
+            DataTable dt = Base_dt(str_sql);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return MyData.Utils.GetModelByDataRow<T>(dt.Rows[0]);
+            }
+            return new T();
+        }
 
         public static DataTable Base_dt(string str_sql, OleDbTransaction tr)
         {
@@ -280,7 +299,7 @@ namespace MyData
         /// <returns></returns>
         public static int Base_ExecuteNonQuery(string str_sql, OleDbTransaction tr)
         {
-            OleDbCommand cmd = new OleDbCommand(str_sql,tr.Connection);
+            OleDbCommand cmd = new OleDbCommand(str_sql, tr.Connection);
             cmd.Transaction = tr;
             int i;
             try
@@ -289,14 +308,14 @@ namespace MyData
 
                 return i;
             }
-            catch 
+            catch
             {
-                
+
                 return -1;
             }
-        
-        
-        
+
+
+
         }
         #endregion
 
@@ -398,18 +417,18 @@ namespace MyData
             string fhstr = " and " + gcode + "='" + num + "'";
             string f = "";
             string[] value = value = DataBase.Base_Scalar("select value1 from sys_config where title='福江汉岳'").Split('#');
-            for (int i = 0; i < value.Length-1 ; i++)
+            for (int i = 0; i < value.Length - 1; i++)
             {
                 if (value[i].IndexOf(num.ToString() + ",") > -1)
                 {
                     string[] va = value[i].Split(',');
                     f = " and ( ";
-                    for (int j = 0; j < va.Length-1 ; j++)
+                    for (int j = 0; j < va.Length - 1; j++)
                     {
                         f += " " + gcode + "='" + va[j].ToString() + "' or";
                     }
                     fhstr = Utils.DelLastChar(f, "or") + ")";
-                    
+
                 }
             }
             return fhstr;
@@ -539,11 +558,11 @@ namespace MyData
         /// <param name="sm">说明</param>
         /// <param name="czlx">操作类型(增加、删除、修改、查询)</param>
         /// <param name="bz">备注</param>
-        public static void Base_czrz(string userid,string btable,string bcode,string sm,string czlx,string bz)
+        public static void Base_czrz(string userid, string btable, string bcode, string sm, string czlx, string bz)
         {
 
-            string HostName = Dns.GetHostName(); 
-            IPHostEntry MyEntry = Dns.GetHostByName(Dns.GetHostName()); 
+            string HostName = Dns.GetHostName();
+            IPHostEntry MyEntry = Dns.GetHostByName(Dns.GetHostName());
             IPAddress MyAddress = new IPAddress(MyEntry.AddressList[0].Address);
 
             Base_cmd("insert into sys_czrz(userid,btable,bcode,sm,czlx,bz,cztime,ip)values('" + userid + "','" + btable + "','" + bcode + "','" + sm + "','" + czlx + "','" + bz + "',getdate(),'" + MyAddress + "')");
@@ -556,14 +575,14 @@ namespace MyData
         /// <param name="dqy">当前页</param>
         /// <param name="num">每页记录条数</param>
         /// <returns></returns>
-        public static string TopQuery(string sql,string dqy,string num )
+        public static string TopQuery(string sql, string dqy, string num)
         {
             string zys = "", topnum = "", colums = "", mess = "N";
             int count = DataBase.Base_count("(" + sql + ")a", " 1=1 ");
             if (String.IsNullOrEmpty(dqy))
                 dqy = "1";
             if (String.IsNullOrEmpty(num))
-                num = "10";                
+                num = "10";
             if (count % Convert.ToInt32(num) == 0)
                 zys = (count / Convert.ToInt32(num)).ToString();
             else

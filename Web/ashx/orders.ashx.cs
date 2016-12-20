@@ -63,6 +63,7 @@ namespace Web.ashx
             orders.UpdatePerson = userName;
             orders.UpdateTime = DateTime.Now;
             orders.YearMonth = MyData.Utils.getYearMonth();
+            orders.YearMonthDate = DateTime.Now;
             if (new BLL.OrdersBLL().Insert(orders))
             {
                 return "0";

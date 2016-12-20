@@ -25,6 +25,8 @@ namespace Model
 
         public int YearMonth { get; set; }
 
+        public System.DateTime YearMonthDate { get; set; }
+
         public decimal Price { get; set; }
 
         public Nullable<System.DateTime> CreateTime { get; set; }

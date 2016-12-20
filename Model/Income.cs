@@ -8,7 +8,7 @@ namespace Model
 {
     public class Income
     {
-        public string YearMonth { get; set; }
+        public Int32 YearMonth { get; set; }
         public string AgentId { get; set; }
         public string AgentName { get; set; }
         public string CareerStatus { get; set; }
@@ -22,6 +22,8 @@ namespace Model
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public int State { get; set; }
+
+        public decimal AllMonthMoney { get; set; }
         public decimal LastMonthMoney { get; set; }
         public decimal NearlyThreeMonthsMoney { get; set; }
         public decimal NearlySixMonthsMoney { get; set; }
