@@ -5,11 +5,7 @@
         valueField: 'Id',
         textField: 'Name'
     });
-    $('#txt_RefereeId').combobox({
-        url: '../ashx/Base.ashx?type=getAgents',
-        valueField: 'Id',
-        textField: 'Name'
-    });
+
     $('#txt_Province').combobox({
         url: '../ashx/Base.ashx?type=getRegion&st=p',
         valueField: 'RegionCode',
@@ -41,7 +37,7 @@
         pageList: [20, 30, 40, 50],
         queryParams: {
             type: "get",
-            wherestr: $("#txt_SearchId").val() + ","
+            wherestr: $("#txt_SearchId").val() + "," + $("#txt_type").combobox('getValue')
         },
         columns: [[
                     { field: 'Id', title: '编号', width: 100, align: 'left' },
@@ -104,12 +100,17 @@
     $('#lbtn_get').bind('click', function () {
         $('#dg').datagrid('load', {
             type: "get",
-            wherestr: $("#txt_SearchId").val() + ","
+            wherestr: $("#txt_SearchId").val() + "," + $("#txt_type").combobox('getValue')
         });
     });
 
     $("#lbtn_add").bind('click', function () {
         clear();
+        $('#txt_RefereeId').combobox({
+            url: '../ashx/Base.ashx?type=getAgents',
+            valueField: 'Id',
+            textField: 'Name'
+        });
         $('#dlg').dialog('open').dialog('setTitle', '新增');
 
     });
@@ -136,10 +137,10 @@
                     alert("请填写加入日期！")
                     return;
                 }
-                if ($('#txt_RefereeId').combobox('getValue') == "") {
-                    alert('请选择推荐人！');
-                    return;
-                }
+                //if ($('#txt_RefereeId').combobox('getValue') == "") {
+                //    alert('请选择推荐人！');
+                //    return;
+                //}
                 loadMbData();
                 $.ajax({
                     datatype: "text",

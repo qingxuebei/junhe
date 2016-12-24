@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    $("#txt_Year").combobox("setValue", getCurrentYear());
+    $("#txt_Month").combobox("setValue", getCurrentMonth());
+
     $('#txt_AgentId').combobox({
         url: '../ashx/Base.ashx?type=getAgents',
         valueField: 'Id',
@@ -25,7 +28,7 @@
         pageList: [20, 30, 40, 50],
         queryParams: {
             type: "get",
-            wherestr: $("#txt_SearchAgentsId").val() + ","
+            wherestr: $("#txt_SearchAgentsId").val() + "," + $("#txt_Year").combobox('getValue') + $("#txt_Month").combobox('getValue')
         },
         columns: [[
                     { field: 'Id', title: '编号', width: 100, align: 'left' },
@@ -73,7 +76,7 @@
     $('#lbtn_get').bind('click', function () {
         $('#dg').datagrid('load', {
             type: "get",
-            wherestr: $("#txt_SearchAgentsId").val() + ","
+            wherestr: $("#txt_SearchAgentsId").val() + "," + $("#txt_Year").combobox('getValue') + $("#txt_Month").combobox('getValue')
         });
     });
 

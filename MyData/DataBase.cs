@@ -113,6 +113,25 @@ namespace MyData
             }
             return Dt;
         }
+        public static List<T> Base_list<T>(String str_sql, OleDbTransaction tr) where T : new()
+        {
+            DataTable dt = Base_dt(str_sql, tr);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return MyData.Utils.ConvertToList<T>(dt).ToList();
+            }
+            return null;
+        }
+
+        public static T Base_getFirst<T>(String str_sql, OleDbTransaction tr) where T : new()
+        {
+            DataTable dt = Base_dt(str_sql, tr);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return MyData.Utils.GetModelByDataRow<T>(dt.Rows[0]);
+            }
+            return new T();
+        }
 
         public static void Base_dt(string str_sql, System.Data.DataTable dt)
         {
@@ -172,7 +191,7 @@ namespace MyData
                 str = cmd.ExecuteScalar();
 
             }
-            catch
+            catch (Exception ex)
             {
                 str = null;
             }

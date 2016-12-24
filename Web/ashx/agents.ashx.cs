@@ -23,6 +23,25 @@ namespace Web.ashx
             {
                 strWhere += " and Id='" + st[0] + "'";
             }
+            if (!String.IsNullOrWhiteSpace(st[1]))
+            {
+                String type = st[1];
+                if (type == "0")
+                {
+                    //代理人
+                    strWhere += " and Rank like 'S%'";
+                }
+                else if (type == "1")
+                {
+                    //代理商
+                    strWhere += " and Rank like 'D%'";
+                }
+                else if (type == "2")
+                {
+                    //合伙人
+                    strWhere += " and Rank like 'P%'";
+                }
+            }
             if (null != context.Request["rows"])
             {
                 pageRows = int.Parse(context.Request["rows"].ToString().Trim());
@@ -79,7 +98,7 @@ namespace Web.ashx
             }
             catch (Exception ex)
             {
-                
+
             }
             return "添加失败！";
         }

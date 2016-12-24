@@ -24,6 +24,10 @@ namespace Web.ashx
             {
                 strWhere += " and AgentId='" + st[0] + "'";
             }
+            if (!String.IsNullOrWhiteSpace(st[1]))
+            {
+                strWhere += " and YearMonth=" + Convert.ToInt32(st[1]);
+            }
             if (null != context.Request["rows"])
             {
                 pageRows = int.Parse(context.Request["rows"].ToString().Trim());
@@ -78,11 +82,10 @@ namespace Web.ashx
                 String agentsId = context.Request.Params["agentsId"].ToString();
                 if (String.IsNullOrWhiteSpace(id) || String.IsNullOrWhiteSpace(agentsId)) { return "作废失败"; }
                 Model.Orders orders = new Model.Orders();
-                orders.AgentId = agentsId;
-                orders.Id = id;
+                orders = new BLL.OrdersBLL().getOrdersById(id);
+                if (orders == null || String.IsNullOrWhiteSpace(orders.Id)) { return "Id 错误！"; }
                 if (new BLL.OrdersBLL().Update(orders)) { return "0"; }
                 else return "修改失败";
-
             }
             catch (Exception ex) { }
 

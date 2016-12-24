@@ -2,6 +2,7 @@
 using MyData;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,17 @@ namespace BLL
             BLL.OrdersBLL orderBLL = new BLL.OrdersBLL();
             DAL.IncomeDal incomeDal = new DAL.IncomeDal();
             //Step 1
-            //首先取出这个人的信息
-            Agents agents = DataBase.Base_getFirst<Agents>(" and Id = '" + orders.AgentId + "' and State != 0");
+            #region 首先取出这个人的信息
+            Agents agents = DataBase.Base_getFirst<Agents>("select * from Agents where  Id = '" + orders.AgentId + "' and State != 0", tr);
             agents.State = Convert.ToInt32(MyData.AgentsState.正常);
 
             Model.Income income = new Income();
-            income = incomeDal.getIncomebyId(orders.YearMonth, agents.Id);
-            if (income == null)
+            income = incomeDal.getIncomebyId(orders.YearMonth, agents.Id, tr);
+            bool isinsert = false;//判断数据是插入还是修改
+            bool isTrue = false;//推荐人或者代理人或者合伙人是否存在
+            if (income == null || String.IsNullOrWhiteSpace(income.AgentId))
             {
+                isinsert = true;
                 income.YearMonth = orders.YearMonth;
                 income.AgentId = agents.Id;
                 income.AgentName = agents.Name;
@@ -34,47 +38,123 @@ namespace BLL
                 income.AgencyName = agents.AgencyName;
                 income.AgencyId = agents.AgencyId;
                 income.CreateTime = DateTime.Now;
-                income.UpdateTime = DateTime.Now;
-                income.LastMonthMoney = orderBLL.getOneMonthPrice(agents.Id);
-                income.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents.Id);
-                income.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents.Id);
-                income.AllMonthMoney = orderBLL.getAllMonthPrice(agents.Id);
+                income.CreatePerson = orders.CreatePerson;
+                income.LastMonthMoney = orderBLL.getOneMonthPrice(agents.Id, tr);
+                income.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents.Id, tr);
+                income.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents.Id, tr);
+                income.AllMonthMoney = orderBLL.getAllMonthPrice(agents.Id, tr);
                 income.State = Convert.ToInt32(MyData.IncomeState.正常);
             }
-            //计算截至目前当月个人订单
+            else { income.AllMonthMoney += orders.Price; }
+            //计算截至目前当月个人订单分成
+            income.UpdateTime = DateTime.Now;
+            income.UpdatePerson = orders.UpdatePerson;
             income.PersonalMoney += orders.Price;
+            //计算个人订单分成
             jisuanGerenDingdanFencheng(income);
-
+            //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+            income.IncomeMoney = income.SalesServiceMoney + income.PersonalServiceMoney + income.MarketServiceMoney + income.RegionServiceMoney + income.RegionServiceYum;
+            incomeDal.InsertOrUpdateIncome(tr, income, isinsert);
+            #endregion
             //Step 2
-            //计算推荐人的销售奖金
+            #region 计算推荐人的销售奖金
             if (!String.IsNullOrWhiteSpace(agents.RefereeId))
             {
                 Model.Income income_t = new Income();
-                income_t = incomeDal.getIncomebyId(orders.YearMonth, agents.RefereeId);
-                if (income_t == null)
+                income_t = incomeDal.getIncomebyId(orders.YearMonth, agents.RefereeId, tr);
+                isinsert = false;
+                if (income_t == null || String.IsNullOrWhiteSpace(income_t.AgentId))
                 {
-                    Agents agents_t = DataBase.Base_getFirst<Agents>(" and Id = '" + orders.AgentId + "' and State != 0");
-                    income_t.YearMonth = orders.YearMonth;
-                    income_t.AgentId = agents_t.Id;
-                    income_t.AgentName = agents_t.Name;
-                    income_t.CareerStatus = agents_t.CareerStatus;
-                    income_t.Rank = agents_t.Rank;
-                    income_t.RefereeId = agents_t.RefereeId;
-                    income_t.RefereeName = agents_t.RefereeName;
-                    income_t.AgencyName = agents_t.AgencyName;
-                    income_t.AgencyId = agents_t.AgencyId;
-                    income_t.CreateTime = DateTime.Now;
-                    income_t.UpdateTime = DateTime.Now;
-                    income_t.LastMonthMoney = orderBLL.getOneMonthPrice(agents_t.Id);
-                    income_t.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_t.Id);
-                    income_t.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_t.Id);
-                    income_t.AllMonthMoney = orderBLL.getAllMonthPrice(agents_t.Id);
-                    income_t.State = Convert.ToInt32(MyData.IncomeState.正常);
+                    isinsert = true;
+                    Agents agents_t = DataBase.Base_getFirst<Agents>("select * from Agents where  Id = '" + agents.RefereeId + "' and State != 0", tr);
+                    if (agents_t != null && !String.IsNullOrWhiteSpace(agents_t.Id))
+                    {
+                        isTrue = true;
+                        income_t.YearMonth = orders.YearMonth;
+                        income_t.AgentId = agents_t.Id;
+                        income_t.AgentName = agents_t.Name;
+                        income_t.CareerStatus = agents_t.CareerStatus;
+                        income_t.Rank = agents_t.Rank;
+                        income_t.RefereeId = agents_t.RefereeId;
+                        income_t.RefereeName = agents_t.RefereeName;
+                        income_t.AgencyName = agents_t.AgencyName;
+                        income_t.AgencyId = agents_t.AgencyId;
+                        income_t.CreateTime = DateTime.Now;
+                        income_t.CreatePerson = orders.CreatePerson;
+                        income_t.LastMonthMoney = orderBLL.getOneMonthPrice(agents_t.Id, tr);
+                        income_t.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_t.Id, tr);
+                        income_t.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_t.Id, tr);
+                        income_t.AllMonthMoney = orderBLL.getAllMonthPrice(agents_t.Id, tr);
+                        income_t.State = Convert.ToInt32(MyData.IncomeState.正常);
+                    }
                 }
-                income_t.SalesMoney += orders.Price;
+                else { isTrue = true; }
+                if (isTrue == true)
+                {
+                    income_t.UpdateTime = DateTime.Now;
+                    income_t.UpdatePerson = orders.UpdatePerson;
+                    income_t.SalesMoney += orders.Price;
+                    //计算个人VIP顾客销售奖金
+                    jisuanTuijianrenVipJiangjin(income_t);
+                    //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                    income_t.IncomeMoney = income_t.SalesServiceMoney + income_t.PersonalServiceMoney + income_t.MarketServiceMoney + income_t.RegionServiceMoney + income_t.RegionServiceYum;
+                    incomeDal.InsertOrUpdateIncome(tr, income_t, isinsert);
+                }
             }
+            #endregion
             //Step 3
+            #region 计算市场服务费分成
+            if (!String.IsNullOrWhiteSpace(agents.AgencyId))
+            {
+                Model.Income income_s = new Income();
+                income_s = incomeDal.getIncomebyId(orders.YearMonth, agents.AgencyId, tr);
+                isinsert = false; isTrue = false;
+                if (income_s == null || String.IsNullOrWhiteSpace(income_s.AgentId))
+                {
+                    isinsert = true;
+                    Agents agents_s = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents.AgencyId + "' and State != 0", tr);
+                    if (agents_s != null && !String.IsNullOrWhiteSpace(agents_s.Id))
+                    {
+                        isTrue = true;
+                        income_s.YearMonth = orders.YearMonth;
+                        income_s.AgentId = agents_s.Id;
+                        income_s.AgentName = agents_s.Name;
+                        income_s.CareerStatus = agents_s.CareerStatus;
+                        income_s.Rank = agents_s.Rank;
+                        income_s.RefereeId = agents_s.RefereeId;
+                        income_s.RefereeName = agents_s.RefereeName;
+                        income_s.AgencyName = agents_s.AgencyName;
+                        income_s.AgencyId = agents_s.AgencyId;
+                        income_s.CreateTime = DateTime.Now;
+                        income_s.UpdateTime = DateTime.Now;
+                        income_s.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s.Id, tr);
+                        income_s.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s.Id, tr);
+                        income_s.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s.Id, tr);
+                        income_s.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s.Id, tr);
+                        income_s.State = Convert.ToInt32(MyData.IncomeState.正常);
+                    }
+                }
+                else { isTrue = true; }
+                if (isTrue == true)
+                {
+                    income_s.UpdateTime = DateTime.Now;
+                    income_s.UpdatePerson = orders.UpdatePerson;
+                    income_s.MarketMoney += orders.Price;
+                    jisuanShichangTuiguangFuwufei(income_s);
+                    //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                    income_s.IncomeMoney = income_s.SalesServiceMoney + income_s.PersonalServiceMoney + income_s.MarketServiceMoney + income_s.RegionServiceMoney + income_s.RegionServiceYum;
+                    
+                    incomeDal.InsertOrUpdateIncome(tr, income_s, isinsert);
+                }
+            }
+            #endregion
+            //step 4
+            //计算区域管理服务费
+            //TODO 
 
+
+            //step 6 修改agents
+            UpdateAgents(agents, income, tr);
 
         }
         public void jisuanGerenDingdanFencheng(Model.Income income)
@@ -84,9 +164,8 @@ namespace BLL
             {
                 income.PersonalServiceMoney = 0;
             }
-            else
+            else//其他级别一般情况下都是10%
             {
-                //其他级别一般情况下都是10%
                 income.PersonalServiceMoney = income.PersonalMoney * (decimal)0.1;
             }
         }
@@ -100,7 +179,33 @@ namespace BLL
             }
         }
 
-        public bool UpdateAgents(Model.Agents agents, Model.Income income, OleDbTransaction tr)
+        public void jisuanShichangTuiguangFuwufei(Model.Income income_s)
+        {
+            //当月个人订单不足1000，次月停发推广服务费及管理服务费
+            if (income_s.LastMonthMoney < 1000)
+            {
+                income_s.MarketServiceMoney = (decimal)0;
+                return;
+            }
+            //1k - 1w 10 %
+            if (income_s.MarketMoney >= 1000 && income_s.MarketMoney < 10000)
+            {
+                income_s.MarketServiceMoney = income_s.MarketMoney * (decimal)0.1;
+            }
+            //1w-3w 15%
+            else if (income_s.MarketMoney >= 10000 && income_s.MarketMoney < 30000)
+            {
+                income_s.MarketServiceMoney = income_s.MarketMoney * (decimal)0.15;
+            }
+            //3w以上20%
+            else if (income_s.MarketMoney >= 30000)
+            {
+                income_s.MarketServiceMoney = income_s.MarketMoney * (decimal)0.2;
+            }
+
+        }
+
+        public void UpdateAgents(Model.Agents agents, Model.Income income, OleDbTransaction tr)
         {
             //判断是否为代理人
             if (agents.Rank == "S1" || agents.Rank == "S2")
@@ -113,9 +218,13 @@ namespace BLL
                         agents.Rank = "S2";
                     }
                 }
-                return new DAL.AgentsDal().UpdateAgents(agents);
+                new DAL.AgentsDal().UpdateAgents(agents);
             }
-            return false;
+        }
+
+        public DataTable getIncomeByYearmonth(String strWhere)
+        {
+            return new DAL.IncomeDal().getIncomeByYearmonth(strWhere);
         }
     }
 }

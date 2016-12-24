@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using Model;
 
 namespace BLL
 {
@@ -13,7 +14,6 @@ namespace BLL
         public DataTable GetAllProducts(Model.Products products)
         {
             ProductsDal productDal = new ProductsDal();
-
             return productDal.GetAllProducts(products);
         }
         public bool Insert(Model.Products products)

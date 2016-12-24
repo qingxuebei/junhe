@@ -59,4 +59,13 @@ function IsThisYearMonth(yearMonth) {
     if (mydate == yearMonth) { return true; }
     return false;
 }
+function getCurrentYear() {
+    return new Date().getFullYear().toString();
+}
+function getCurrentMonth() {
+    var date = new Date;
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" + month : month);
+    return month;
+}
 

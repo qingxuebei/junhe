@@ -13,7 +13,30 @@ namespace DAL
     {
         public DataTable GetAgents(String strWhere)
         {
-            String sql = "select Id,(Id+'--'+Name) as Name,Name as AgentsName,AgencyId,AgencyName,Rank,CareerStatus,State from Agents where 1=1" + strWhere;
+            String sql = @"select Id,(Id+'--'+Name) as Name,Name as AgentsName
+                              ,[Province]
+                              ,[City]
+                              ,[Village]
+                              ,[Birthday]
+                              ,[CareerStatus]
+                              ,[JoinDate]
+                              ,[Rank]
+                              ,[RefereeId]
+                              ,[RefereeName]
+                              ,[AgencyId]
+                              ,[AgencyName]
+                              ,[AccountBank]
+                              ,[AccountBankBranch]
+                              ,[Account]
+                              ,[Address]
+                              ,[ZipCode]
+                              ,[Phone]
+                              ,[CreateTime]
+                              ,[CreatePerson]
+                              ,[UpdateTime]
+                              ,[UpdatePerson]
+                              ,[State]
+                              ,[AgentsStatus] from Agents where 1=1" + strWhere;
             return DataBase.Base_dt(sql);
         }
         public DataTable GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)

@@ -1,4 +1,5 @@
-﻿using MyData;
+﻿using Model;
+using MyData;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,10 +33,17 @@ namespace DAL
             return true;
         }
 
+        public Decimal SumPrice(String str_sql, OleDbTransaction tr)
+        {
+            String sql = "select sum(Price) from Orders where State=1 " + str_sql;
+            String ret = MyData.DataBase.Base_Scalar(sql, tr);
+            return Convert.ToDecimal(ret == "" ? "0" : ret);
+        }
         public Decimal SumPrice(String str_sql)
         {
             String sql = "select sum(Price) from Orders where State=1 " + str_sql;
-            return Convert.ToDecimal(MyData.DataBase.Base_Scalar(sql));
+            String ret = MyData.DataBase.Base_Scalar(sql);
+            return Convert.ToDecimal(ret == "" ? "0" : ret);
         }
 
         public DataTable GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
@@ -65,11 +73,21 @@ namespace DAL
         {
             return DataBase.Base_count("Orders", strWhere);
         }
-        public bool Update(Model.Orders orders)
+        public bool Update(Model.Orders orders, OleDbTransaction tr)
         {
             String sql = "update Orders set State=0 where Id='" + orders.Id + "';";
             String sql2 = "update OrdersDetail set State=0 where OrdersId='" + orders.Id + "'";
-            return DataBase.Base_cmd(sql + sql2);
+            DataBase.Base_cmd(sql + sql2, tr);
+            return true;
+        }
+        public Orders getOrdersById(String id)
+        {
+            return DataBase.Base_getFirst<Orders>("select * from Orders where Id='" + id + "'");
+        }
+
+        public DataTable getOrdersByObject(String strWhere)
+        {
+            return DataBase.Base_dt("select * from Orders where 1=1 " + strWhere);
         }
     }
 }

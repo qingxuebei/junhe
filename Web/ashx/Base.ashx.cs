@@ -35,6 +35,9 @@ namespace Web.ashx
                     case "delete":
                         context.Response.Write(del(context));
                         break;
+                    case "export":
+                        context.Response.Write(export(context));
+                        break;
                     case "getBank":
                         context.Response.Write(getBank(context));
                         break;
@@ -77,6 +80,10 @@ namespace Web.ashx
             return null;
         }
         public virtual String del(HttpContext context)
+        {
+            return null;
+        }
+        public virtual String export(HttpContext context)
         {
             return null;
         }

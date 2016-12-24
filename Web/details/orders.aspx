@@ -18,7 +18,25 @@
                         <div id="tb_lzd" style="padding: 5px; height: auto">
                             <input class="easyui-textbox" id="txt_SearchAgentsId" data-options="prompt: '代理人编号'" style="width: 200px; height: 25px" />
                             <span></span>
-
+                            <select id="txt_Year" class="easyui-combobox" name="txt_Year" style="width: 100px;">
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                            <select id="txt_Month" class="easyui-combobox" name="txt_Month" style="width: 100px;">
+                                <option value="01">1</option>
+                                <option value="02">2</option>
+                                <option value="03">3</option>
+                                <option value="04">4</option>
+                                <option value="05">5</option>
+                                <option value="06">6</option>
+                                <option value="07">7</option>
+                                <option value="08">8</option>
+                                <option value="09">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <span></span>
                             <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
                             <span></span>
                             <a href="#" class="easyui-linkbutton" id="lbtn_add" data-options="iconCls:'icon-add'">新增</a>
@@ -57,7 +75,8 @@
 
                 <tr>
                     <td style="width: 10px"></td>
-                    <td><input type="hidden" id="txt_Ids" />
+                    <td>
+                        <input type="hidden" id="txt_Ids" />
                         <input type="hidden" id="txt_Counts" />
                         <input type="hidden" id="txt_Guid" />
                     </td>
@@ -88,8 +107,8 @@
                     <td style="width: 10px"></td>
                     <td style="text-align: right">总金额：</td>
                     <td colspan="7">
-                        <input type="text" id="txt_AllPrice" class="easyui-numberbox" data-options="width:80,min:0,precision:2" value="0" readonly="true"/>元&nbsp;&nbsp;
-                   <input class="easyui-validatebox" id="div_nums" style="width: 120px" readonly="true"/>
+                        <input type="text" id="txt_AllPrice" class="easyui-numberbox" data-options="width:80,min:0,precision:2" value="0" readonly="true" />元&nbsp;&nbsp;
+                   <input class="easyui-validatebox" id="div_nums" style="width: 120px" readonly="true" />
                     </td>
                 </tr>
                 <tr>

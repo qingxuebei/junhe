@@ -56,6 +56,16 @@
 	                    "menuname": "订单汇总",
 	                    "icon": "icon-nav",
 	                    "url": "/details/hzorders.aspx"
+	                }, {
+	                    "menuid": "21",
+	                    "menuname": "会员收入",
+	                    "icon": "icon-nav",
+	                    "url": "/details/income.aspx"
+	                }, {
+	                    "menuid": "21",
+	                    "menuname": "小组VIP概要",
+	                    "icon": "icon-nav",
+	                    "url": "/details/agentsSelect.aspx"
 	                }]
 	            }]
         };

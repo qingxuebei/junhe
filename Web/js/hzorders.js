@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $("#txt_Year1").combobox("setValue", getCurrentYear());
+    $("#txt_Month1").combobox("setValue", getCurrentMonth());
+    $("#txt_Year2").combobox("setValue", getCurrentYear());
+    $("#txt_Month2").combobox("setValue", getCurrentMonth());
+
     $('#lbtn_cpxs').bind('click', function () {
         $("#dg_cpxs").datagrid({
             url: "../ashx/Base.ashx?i=cx" + Math.random(),

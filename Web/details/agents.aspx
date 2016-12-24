@@ -18,7 +18,13 @@
                         <div id="tb_lzd" style="padding: 5px; height: auto">
                             <input class="easyui-textbox" id="txt_SearchId" data-options="prompt: '代理人编号'" style="width: 200px; height: 25px" />
                             <span></span>
-
+                            <select id="txt_type" class="easyui-combobox" name="txt_Year2" style="width: 100px;">
+                                <option value="">选择会员类别</option>
+                                <option value="0">代理人</option>
+                                <option value="1">代理商</option>
+                                <option value="2">合伙人</option>
+                            </select>
+                            <span></span>
                             <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
                             <span></span>
                             <a href="#" class="easyui-linkbutton" id="lbtn_add" data-options="iconCls:'icon-add'">新增</a>
