@@ -2,12 +2,12 @@
     $('#lbtn_get').bind('click', function () {
 
         if ($("#txt_SearchAgentsId").val() == "") {
-            alert('请填写代理人编号！');
+            alert('请填写代理商编号！');
             return;
         }
 
-        $("#dg").datagrid({
-            url: "../ashx/agentsSelect.ashx?i=cx" + Math.random(),
+        $("#dg").treegrid({
+            url: "../ashx/qyAgencysSelect.ashx?i=cx" + Math.random(),
             toolbar: "#tb_lzd",
             striped: true,
             rownumbers: true,
@@ -17,6 +17,8 @@
             fitColumns: true,
             showFooter: true,
             singleSelect: true,
+            idField: 'Id',
+            treeField: 'Name',
             //pageSize: 20,
             //pageList: [20, 30, 40, 50],
             queryParams: {
@@ -26,7 +28,7 @@
             },
             columns: [[
                         { field: 'Id', title: '编号', width: 100, align: 'left' },
-                        { field: 'AgentsName', title: '姓名', width: 100, align: 'left' },
+                        { field: 'Name', title: '姓名', width: 100, align: 'left' },
                         {
                             field: 'Birthday', title: '生日', width: 100, align: 'left',
                             formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
@@ -37,8 +39,8 @@
                             formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
                         },
                         { field: 'Rank', title: '职级', width: 100, align: 'left' },
-                        { field: 'RefereeId', title: '推荐人编号', width: 100, align: 'left' },
-                        { field: 'RefereeName', title: '推荐人', width: 100, align: 'left' },
+                        { field: 'AgencyId', title: '资深代理商编号', width: 100, align: 'left' },
+                        { field: 'AgencyName', title: '资深代理商', width: 100, align: 'left' },
                         { field: 'Phone', title: '手机', width: 100, align: 'left' },
                         {
                             field: 'State', title: '状态', width: 100, align: 'left',
@@ -67,7 +69,7 @@
 
         $.ajax({
             datatype: "text",
-            url: "../ashx/agentsSelect.ashx?i=" + Math.random(),
+            url: "../ashx/qyAgencysSelect.ashx?i=" + Math.random(),
             data: {
                 type: "get",
                 agentId: $("#txt_SearchAgentsId").val(),
@@ -93,11 +95,11 @@
 
 function orderSelect(index) {
     $('#dlg_order').dialog('open').dialog('setTitle', '历史订单');
-    $("#dg").datagrid("selectRow", index);
-    var row = $("#dg").datagrid("getSelected");
+    $("#dg").treegrid("selectRow", index);
+    var row = $("#dg").treegrid("getSelected");
     if (row) {
         $("#dg_order").datagrid({
-            url: "../ashx/agentsSelect.ashx?i=cx" + Math.random(),
+            url: "../ashx/qyAgencysSelect.ashx?i=cx" + Math.random(),
             toolbar: "#tb_lzd",
             striped: true,
             rownumbers: true,

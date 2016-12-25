@@ -39,6 +39,34 @@ namespace DAL
                               ,[AgentsStatus] from Agents where 1=1" + strWhere;
             return DataBase.Base_dt(sql);
         }
+        public List<Agents> GetAgentsList(String strWhere)
+        {
+            String sql = @"select Id,Name
+                              ,[Province]
+                              ,[City]
+                              ,[Village]
+                              ,[Birthday]
+                              ,[CareerStatus]
+                              ,[JoinDate]
+                              ,[Rank]
+                              ,[RefereeId]
+                              ,[RefereeName]
+                              ,[AgencyId]
+                              ,[AgencyName]
+                              ,[AccountBank]
+                              ,[AccountBankBranch]
+                              ,[Account]
+                              ,[Address]
+                              ,[ZipCode]
+                              ,[Phone]
+                              ,[CreateTime]
+                              ,[CreatePerson]
+                              ,[UpdateTime]
+                              ,[UpdatePerson]
+                              ,[State]
+                              ,[AgentsStatus] from Agents where 1=1" + strWhere;
+            return DataBase.Base_list<Agents>(sql);
+        }
         public DataTable GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
         {
             StringBuilder strSql = new StringBuilder();

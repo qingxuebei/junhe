@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7,10 +8,11 @@ using System.Web;
 namespace Web.ashx
 {
     /// <summary>
-    /// agentsSelect 的摘要说明
+    /// agencysSelect 的摘要说明
     /// </summary>
-    public class agentsSelect : Base
+    public class agencysSelect : Base
     {
+
         public override string get(HttpContext context)
         {
             String agentId = context.Request.Params["agentId"].ToString();
@@ -26,7 +28,20 @@ namespace Web.ashx
 
             if (style == "getList")
             {
-                sql = " and  RefereeId='" + agentId + "'order by CreateTime";
+                //List<Agents> reAgentsList = new List<Agents>();
+                //sql = " and  AgencyId='" + agentId + "' order by CreateTime ";
+                //List<Agents> agentsList = new BLL.AgentsBLL().GetAgentsList(sql);
+                //if (agentsList != null && agentsList.Count > 0)
+                //{
+                //    foreach (Agents agents in agentsList)
+                //    {
+                //        if (agents.Rank.StartsWith("S"))
+                //        {
+                //            reAgentsList.Add(agents);
+                //        }
+                //    }
+                //}
+                sql = " and  AgencyId='" + agentId + "' and Rank in ('S1','S2') order by CreateTime ";
             }
             else if (style == "getSelf")
             {

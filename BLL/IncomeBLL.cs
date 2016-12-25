@@ -96,6 +96,14 @@ namespace BLL
                     income_t.SalesMoney += orders.Price;
                     //计算个人VIP顾客销售奖金
                     jisuanTuijianrenVipJiangjin(income_t);
+
+                    //如果为代理商，由此订单产生的市场推广服务费加到个人身上
+                    if (agents.Rank.StartsWith("P") || agents.Rank.StartsWith("D"))
+                    {
+                        income_t.MarketMoney += orders.Price;
+                        jisuanShichangTuiguangFuwufei(income_t);
+                    }
+
                     //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
                     income_t.IncomeMoney = income_t.SalesServiceMoney + income_t.PersonalServiceMoney + income_t.MarketServiceMoney + income_t.RegionServiceMoney + income_t.RegionServiceYum;
                     incomeDal.InsertOrUpdateIncome(tr, income_t, isinsert);
@@ -104,53 +112,194 @@ namespace BLL
             #endregion
             //Step 3
             #region 计算市场服务费分成
+            Agents agents_s = new Agents();
             if (!String.IsNullOrWhiteSpace(agents.AgencyId))
             {
-                Model.Income income_s = new Income();
-                income_s = incomeDal.getIncomebyId(orders.YearMonth, agents.AgencyId, tr);
-                isinsert = false; isTrue = false;
-                if (income_s == null || String.IsNullOrWhiteSpace(income_s.AgentId))
+                if (agents.Rank.StartsWith("S"))//如果为代理人，市场推广服务费添加到资深代理商身上
                 {
-                    isinsert = true;
-                    Agents agents_s = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents.AgencyId + "' and State != 0", tr);
-                    if (agents_s != null && !String.IsNullOrWhiteSpace(agents_s.Id))
+                    Model.Income income_s = new Income();
+                    income_s = incomeDal.getIncomebyId(orders.YearMonth, agents.AgencyId, tr);
+                    isinsert = false; isTrue = false;
+                    if (income_s == null || String.IsNullOrWhiteSpace(income_s.AgentId))
                     {
-                        isTrue = true;
-                        income_s.YearMonth = orders.YearMonth;
-                        income_s.AgentId = agents_s.Id;
-                        income_s.AgentName = agents_s.Name;
-                        income_s.CareerStatus = agents_s.CareerStatus;
-                        income_s.Rank = agents_s.Rank;
-                        income_s.RefereeId = agents_s.RefereeId;
-                        income_s.RefereeName = agents_s.RefereeName;
-                        income_s.AgencyName = agents_s.AgencyName;
-                        income_s.AgencyId = agents_s.AgencyId;
-                        income_s.CreateTime = DateTime.Now;
+                        isinsert = true;
+                        agents_s = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents.AgencyId + "' and State != 0", tr);
+                        if (agents_s != null && !String.IsNullOrWhiteSpace(agents_s.Id))
+                        {
+                            isTrue = true;
+                            income_s.YearMonth = orders.YearMonth;
+                            income_s.AgentId = agents_s.Id;
+                            income_s.AgentName = agents_s.Name;
+                            income_s.CareerStatus = agents_s.CareerStatus;
+                            income_s.Rank = agents_s.Rank;
+                            income_s.RefereeId = agents_s.RefereeId;
+                            income_s.RefereeName = agents_s.RefereeName;
+                            income_s.AgencyName = agents_s.AgencyName;
+                            income_s.AgencyId = agents_s.AgencyId;
+                            income_s.CreateTime = DateTime.Now;
+                            income_s.UpdateTime = DateTime.Now;
+                            income_s.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s.Id, tr);
+                            income_s.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s.Id, tr);
+                            income_s.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s.Id, tr);
+                            income_s.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s.Id, tr);
+                            income_s.State = Convert.ToInt32(MyData.IncomeState.正常);
+                        }
+                    }
+                    else { isTrue = true; }
+                    if (isTrue == true)
+                    {
                         income_s.UpdateTime = DateTime.Now;
-                        income_s.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s.Id, tr);
-                        income_s.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s.Id, tr);
-                        income_s.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s.Id, tr);
-                        income_s.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s.Id, tr);
-                        income_s.State = Convert.ToInt32(MyData.IncomeState.正常);
+                        income_s.UpdatePerson = orders.UpdatePerson;
+                        income_s.MarketMoney += orders.Price;
+                        jisuanShichangTuiguangFuwufei(income_s);
+                        //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                        income_s.IncomeMoney = income_s.SalesServiceMoney + income_s.PersonalServiceMoney + income_s.MarketServiceMoney + income_s.RegionServiceMoney + income_s.RegionServiceYum;
+
+                        incomeDal.InsertOrUpdateIncome(tr, income_s, isinsert);
                     }
                 }
-                else { isTrue = true; }
-                if (isTrue == true)
-                {
-                    income_s.UpdateTime = DateTime.Now;
-                    income_s.UpdatePerson = orders.UpdatePerson;
-                    income_s.MarketMoney += orders.Price;
-                    jisuanShichangTuiguangFuwufei(income_s);
-                    //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
-                    income_s.IncomeMoney = income_s.SalesServiceMoney + income_s.PersonalServiceMoney + income_s.MarketServiceMoney + income_s.RegionServiceMoney + income_s.RegionServiceYum;
-                    
-                    incomeDal.InsertOrUpdateIncome(tr, income_s, isinsert);
-                }
+                //如果为代理商则加到自己身上
             }
             #endregion
             //step 4
             //计算区域管理服务费
-            //TODO 
+            //只有当前订单所有人是代理人才会计算区域管理服务费
+            if (agents_s != null && !String.IsNullOrWhiteSpace(agents_s.AgencyId))//判断资深代理商是否存在
+            {
+                isinsert = false; isTrue = false;
+                //查找资深代理商的资深代理商（A）,添加到A的一级区域管理服务费
+                Agents agents_s1 = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents_s.AgencyId + "' and State != 0", tr);
+                if (agents_s1 != null && !String.IsNullOrWhiteSpace(agents_s1.Id))
+                {
+                    //计算一级区域管理费，如果为初级代理商，则不计算区域管理费
+                    if ((agents_s1.Rank.StartsWith("D") || agents_s1.Rank.StartsWith("P")) && agents_s1.Rank != "D1")
+                    {
+                        isTrue = true;
+                        Model.Income income_s1 = new Income();
+                        income_s1 = incomeDal.getIncomebyId(orders.YearMonth, agents_s1.AgencyId, tr);
+
+                        if (income_s1 == null || String.IsNullOrWhiteSpace(income_s1.AgentId))
+                        {
+                            isinsert = true;
+
+                            income_s1.YearMonth = orders.YearMonth;
+                            income_s1.AgentId = agents_s1.Id;
+                            income_s1.AgentName = agents_s1.Name;
+                            income_s1.CareerStatus = agents_s1.CareerStatus;
+                            income_s1.Rank = agents_s1.Rank;
+                            income_s1.RefereeId = agents_s1.RefereeId;
+                            income_s1.RefereeName = agents_s1.RefereeName;
+                            income_s1.AgencyName = agents_s1.AgencyName;
+                            income_s1.AgencyId = agents_s1.AgencyId;
+                            income_s1.CreateTime = DateTime.Now;
+                            income_s1.UpdateTime = DateTime.Now;
+                            income_s1.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s1.Id, tr);
+                            income_s1.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s1.Id, tr);
+                            income_s1.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s1.Id, tr);
+                            income_s1.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s1.Id, tr);
+                            income_s1.State = Convert.ToInt32(MyData.IncomeState.正常);
+                        }
+
+                        income_s1.UpdateTime = DateTime.Now;
+                        income_s1.UpdatePerson = orders.UpdatePerson;
+                        income_s1.OneMoney += orders.Price;
+                        jisuanQuyuGuanliFuwufei(income_s1);
+                        //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                        income_s1.IncomeMoney = income_s1.SalesServiceMoney + income_s1.PersonalServiceMoney + income_s1.MarketServiceMoney
+                            + income_s1.RegionServiceMoney + income_s1.RegionServiceYum;
+
+                        incomeDal.InsertOrUpdateIncome(tr, income_s1, isinsert);
+                    }
+                    //计算二级区域管理费
+                    Agents agents_s2 = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents_s1.AgencyId + "' and State != 0", tr);
+                    if (agents_s2 != null && !String.IsNullOrWhiteSpace(agents_s2.Id))
+                    {
+                        //如果为初级代理商，则不计算区域管理费
+                        if ((agents_s2.Rank.StartsWith("D") || agents_s2.Rank.StartsWith("P")) && agents_s2.Rank != "D1")
+                        {
+                            isTrue = true;
+                            Model.Income income_s2 = new Income();
+                            income_s2 = incomeDal.getIncomebyId(orders.YearMonth, agents_s2.AgencyId, tr);
+
+                            if (income_s2 == null || String.IsNullOrWhiteSpace(income_s2.AgentId))
+                            {
+                                isinsert = true;
+
+                                income_s2.YearMonth = orders.YearMonth;
+                                income_s2.AgentId = agents_s2.Id;
+                                income_s2.AgentName = agents_s2.Name;
+                                income_s2.CareerStatus = agents_s2.CareerStatus;
+                                income_s2.Rank = agents_s2.Rank;
+                                income_s2.RefereeId = agents_s2.RefereeId;
+                                income_s2.RefereeName = agents_s2.RefereeName;
+                                income_s2.AgencyName = agents_s2.AgencyName;
+                                income_s2.AgencyId = agents_s2.AgencyId;
+                                income_s2.CreateTime = DateTime.Now;
+                                income_s2.UpdateTime = DateTime.Now;
+                                income_s2.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s2.Id, tr);
+                                income_s2.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s2.Id, tr);
+                                income_s2.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s2.Id, tr);
+                                income_s2.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s2.Id, tr);
+                                income_s2.State = Convert.ToInt32(MyData.IncomeState.正常);
+                            }
+
+                            income_s2.UpdateTime = DateTime.Now;
+                            income_s2.UpdatePerson = orders.UpdatePerson;
+                            income_s2.OneMoney += orders.Price;
+                            jisuanQuyuGuanliFuwufei(income_s2);
+                            //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                            income_s2.IncomeMoney = income_s2.SalesServiceMoney + income_s2.PersonalServiceMoney + income_s2.MarketServiceMoney
+                                + income_s2.RegionServiceMoney + income_s2.RegionServiceYum;
+
+                            incomeDal.InsertOrUpdateIncome(tr, income_s2, isinsert);
+                        }
+                        //计算三级区域管理费
+                        Agents agents_s3 = DataBase.Base_getFirst<Agents>("select * from Agents where   Id = '" + agents_s2.AgencyId + "' and State != 0", tr);
+                        if (agents_s3 != null && !String.IsNullOrWhiteSpace(agents_s3.Id))
+                        {
+                            //如果为初级代理商，则不计算区域管理费
+                            if ((agents_s3.Rank.StartsWith("D") || agents_s3.Rank.StartsWith("P")) && agents_s3.Rank != "D1")
+                            {
+                                isTrue = true;
+                                Model.Income income_s3 = new Income();
+                                income_s3 = incomeDal.getIncomebyId(orders.YearMonth, agents_s3.AgencyId, tr);
+
+                                if (income_s3 == null || String.IsNullOrWhiteSpace(income_s3.AgentId))
+                                {
+                                    isinsert = true;
+
+                                    income_s3.YearMonth = orders.YearMonth;
+                                    income_s3.AgentId = agents_s3.Id;
+                                    income_s3.AgentName = agents_s3.Name;
+                                    income_s3.CareerStatus = agents_s3.CareerStatus;
+                                    income_s3.Rank = agents_s3.Rank;
+                                    income_s3.RefereeId = agents_s3.RefereeId;
+                                    income_s3.RefereeName = agents_s3.RefereeName;
+                                    income_s3.AgencyName = agents_s3.AgencyName;
+                                    income_s3.AgencyId = agents_s3.AgencyId;
+                                    income_s3.CreateTime = DateTime.Now;
+                                    income_s3.UpdateTime = DateTime.Now;
+                                    income_s3.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s3.Id, tr);
+                                    income_s3.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s3.Id, tr);
+                                    income_s3.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s3.Id, tr);
+                                    income_s3.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s3.Id, tr);
+                                    income_s3.State = Convert.ToInt32(MyData.IncomeState.正常);
+                                }
+
+                                income_s3.UpdateTime = DateTime.Now;
+                                income_s3.UpdatePerson = orders.UpdatePerson;
+                                income_s3.OneMoney += orders.Price;
+                                jisuanQuyuGuanliFuwufei(income_s3);
+                                //计算总收入=VIP顾客销售奖金+个人订单返利+市场推广服务费+区域管理服务费+业绩分红
+                                income_s3.IncomeMoney = income_s3.SalesServiceMoney + income_s3.PersonalServiceMoney + income_s3.MarketServiceMoney
+                                    + income_s3.RegionServiceMoney + income_s3.RegionServiceYum;
+
+                                incomeDal.InsertOrUpdateIncome(tr, income_s3, isinsert);
+                            }
+                        }
+                    }
+                }
+            }
 
 
             //step 6 修改agents
@@ -203,6 +352,40 @@ namespace BLL
                 income_s.MarketServiceMoney = income_s.MarketMoney * (decimal)0.2;
             }
 
+        }
+        public void jisuanQuyuGuanliFuwufei(Model.Income incomes)
+        {
+            //当月个人订单不足1000，次月停发推广服务费及管理服务费
+            if (incomes.LastMonthMoney < 1000)
+            {
+                incomes.RegionServiceMoney = (decimal)0;
+                return;
+            }
+            //初级代理商计算0
+            if (incomes.Rank == "D1")
+            {
+                incomes.RegionServiceMoney = 0;
+            }
+            //高级代理商计算一级5%
+            else if (incomes.Rank == "D2")
+            {
+                incomes.RegionServiceMoney = incomes.OneMoney * (decimal)0.05;
+            }
+            //区域代理商一级5%、二级2%
+            else if (incomes.Rank == "D3")
+            {
+                incomes.RegionServiceMoney = incomes.OneMoney * (decimal)0.05 + incomes.TwoMoney * (decimal)0.02;
+            }
+            //高级区域代理商一级5%、二级3%、三级1%
+            else if (incomes.Rank == "D4")
+            {
+                incomes.RegionServiceMoney = incomes.OneMoney * (decimal)0.05 + incomes.TwoMoney * (decimal)0.02 + incomes.ThreeMoney * (decimal)0.01;
+            }
+            //总代理商一级5 %、二级4%、三级3%
+            else if (incomes.Rank == "D5")
+            {
+                incomes.RegionServiceMoney = incomes.OneMoney * (decimal)0.05 + incomes.TwoMoney * (decimal)0.04 + incomes.ThreeMoney * (decimal)0.03;
+            }
         }
 
         public void UpdateAgents(Model.Agents agents, Model.Income income, OleDbTransaction tr)

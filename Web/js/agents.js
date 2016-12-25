@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    document.getElementById("div_id").style.display = "";
 
     $('#txt_AccountBank').combobox({
         url: '../ashx/Base.ashx?type=getBank',

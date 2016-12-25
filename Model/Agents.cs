@@ -67,6 +67,8 @@ namespace Model
 
         public int AgentsStatus { get; set; }
 
+        public String _parentId { get; set; }
+
     }
 
 }

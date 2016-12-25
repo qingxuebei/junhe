@@ -11,116 +11,118 @@
 </head>
 <body>
     <form id="form1" class="easyui-form">
-        <div>
-            <table style="width: 100%; border: 0">
-                <tr>
-                    <td>
-                        <div id="tb_lzd" style="padding: 5px; height: auto">
-                            <input class="easyui-textbox" id="txt_SearchAgentsId" data-options="prompt: '代理人编号'" style="width: 200px; height: 25px" />
-                            <span></span>
-                            <select id="txt_Year" class="easyui-combobox" name="txt_Year" style="width: 100px;">
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                            <select id="txt_Month" class="easyui-combobox" name="txt_Month" style="width: 100px;">
-                                <option value="01">1</option>
-                                <option value="02">2</option>
-                                <option value="03">3</option>
-                                <option value="04">4</option>
-                                <option value="05">5</option>
-                                <option value="06">6</option>
-                                <option value="07">7</option>
-                                <option value="08">8</option>
-                                <option value="09">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
-                            <span></span>
-                            <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
-                            <span></span>
-                            <a href="#" class="easyui-linkbutton" id="lbtn_add" data-options="iconCls:'icon-add'">新增</a>
-                            <span></span>
-                        </div>
-                        <div class="easyui-datagrid" id="dg"></div>
-                    </td>
-                </tr>
+        <div id="div_id" style="display: none">
+            <div>
+                <table style="width: 100%; border: 0">
+                    <tr>
+                        <td>
+                            <div id="tb_lzd" style="padding: 5px; height: auto">
+                                <input class="easyui-textbox" id="txt_SearchAgentsId" data-options="prompt: '代理人编号'" style="width: 200px; height: 25px" />
+                                <span></span>
+                                <select id="txt_Year" class="easyui-combobox" name="txt_Year" style="width: 100px;">
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                </select>
+                                <select id="txt_Month" class="easyui-combobox" name="txt_Month" style="width: 100px;">
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <span></span>
+                                <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
+                                <span></span>
+                                <a href="#" class="easyui-linkbutton" id="lbtn_add" data-options="iconCls:'icon-add'">新增</a>
+                                <span></span>
+                            </div>
+                            <div class="easyui-datagrid" id="dg"></div>
+                        </td>
+                    </tr>
 
-            </table>
-        </div>
-        <div id="dlg_detail" class="easyui-dialog" data-options="closed:true,modal:true" style="width: 600px; height: 300px;">
-            <div class="easyui-datagrid" id="dg_detail"></div>
-        </div>
+                </table>
+            </div>
+            <div id="dlg_detail" class="easyui-dialog" data-options="closed:true,modal:true" style="width: 600px; height: 300px;">
+                <div class="easyui-datagrid" id="dg_detail"></div>
+            </div>
 
-        <div id="dlg_add" class="easyui-dialog" data-options="closed:true,modal:true" style="width: 600px; height: 500px;">
+            <div id="dlg_add" class="easyui-dialog" data-options="closed:true,modal:true" style="width: 600px; height: 500px;">
 
-            <table>
-                <tr>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                    <td style="height: 3px"></td>
-                </tr>
-                <tr>
-                    <td style="width: 10px"></td>
-                    <td style="text-align: right">代理人：</td>
-                    <td>
-                        <input id="txt_AgentId" name="txt_AgentId" value="" data-options="width:150,panelHeight:160" />
-                    </td>
-                </tr>
+                <table>
+                    <tr>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                        <td style="height: 3px"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10px"></td>
+                        <td style="text-align: right">代理人：</td>
+                        <td>
+                            <input id="txt_AgentId" name="txt_AgentId" value="" data-options="width:150,panelHeight:160" />
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td style="width: 10px"></td>
-                    <td>
-                        <input type="hidden" id="txt_Ids" />
-                        <input type="hidden" id="txt_Counts" />
-                        <input type="hidden" id="txt_Guid" />
-                    </td>
-                </tr>
-                <tr>
+                    <tr>
+                        <td style="width: 10px"></td>
+                        <td>
+                            <input type="hidden" id="txt_Ids" />
+                            <input type="hidden" id="txt_Counts" />
+                            <input type="hidden" id="txt_Guid" />
+                        </td>
+                    </tr>
+                    <tr>
 
-                    <td style="width: 10px"></td>
-                    <td></td>
-                    <td colspan="6">产品名称：<input id="txt_ProductsId" style="width: 240px;" />
-                        数量：<input type="text" id="txt_Num" class="easyui-numberbox" data-options="width:30,min:1" value="1" />
-                    </td>
-                    <td><a id="btn_add" class="easyui-linkbutton"></a></td>
-                </tr>
+                        <td style="width: 10px"></td>
+                        <td></td>
+                        <td colspan="6">产品名称：<input id="txt_ProductsId" style="width: 240px;" />
+                            数量：<input type="text" id="txt_Num" class="easyui-numberbox" data-options="width:30,min:1" value="1" />
+                        </td>
+                        <td><a id="btn_add" class="easyui-linkbutton"></a></td>
+                    </tr>
 
-                <tr>
+                    <tr>
 
-                    <td style="width: 10px"></td>
-                    <td style="text-align: right"></td>
-                    <td colspan="7">
-                        <div class="easyui-DataGrid" id="data_xx"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="height: 3px"></td>
-                </tr>
-                <tr>
+                        <td style="width: 10px"></td>
+                        <td style="text-align: right"></td>
+                        <td colspan="7">
+                            <div class="easyui-DataGrid" id="data_xx"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 3px"></td>
+                    </tr>
+                    <tr>
 
-                    <td style="width: 10px"></td>
-                    <td style="text-align: right">总金额：</td>
-                    <td colspan="7">
-                        <input type="text" id="txt_AllPrice" class="easyui-numberbox" data-options="width:80,min:0,precision:2" value="0" readonly="true" />元&nbsp;&nbsp;
+                        <td style="width: 10px"></td>
+                        <td style="text-align: right">总金额：</td>
+                        <td colspan="7">
+                            <input type="text" id="txt_AllPrice" class="easyui-numberbox" data-options="width:80,min:0,precision:2" value="0" readonly="true" />元&nbsp;&nbsp;
                    <input class="easyui-validatebox" id="div_nums" style="width: 120px" readonly="true" />
-                    </td>
-                </tr>
-                <tr>
-                    <td style="height: 3px"></td>
-                </tr>
-                <tr>
-                    <td style="width: 10px"></td>
-                    <td colspan="8">
-                        <a href="#" class="easyui-linkbutton" id="lbtn_bd">添加</a>
-                    </td>
-                </tr>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 3px"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10px"></td>
+                        <td colspan="8">
+                            <a href="#" class="easyui-linkbutton" id="lbtn_bd">添加</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </form>
 </body>

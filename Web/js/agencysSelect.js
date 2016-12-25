@@ -2,12 +2,12 @@
     $('#lbtn_get').bind('click', function () {
 
         if ($("#txt_SearchAgentsId").val() == "") {
-            alert('请填写代理人编号！');
+            alert('请填写代理商编号！');
             return;
         }
 
         $("#dg").datagrid({
-            url: "../ashx/agentsSelect.ashx?i=cx" + Math.random(),
+            url: "../ashx/agencysSelect.ashx?i=cx" + Math.random(),
             toolbar: "#tb_lzd",
             striped: true,
             rownumbers: true,
@@ -37,8 +37,8 @@
                             formatter: function (value, row, index) { if (value) { return ShortDatetime(value) } }
                         },
                         { field: 'Rank', title: '职级', width: 100, align: 'left' },
-                        { field: 'RefereeId', title: '推荐人编号', width: 100, align: 'left' },
-                        { field: 'RefereeName', title: '推荐人', width: 100, align: 'left' },
+                        { field: 'AgencyId', title: '资深代理商编号', width: 100, align: 'left' },
+                        { field: 'AgencyName', title: '资深代理商', width: 100, align: 'left' },
                         { field: 'Phone', title: '手机', width: 100, align: 'left' },
                         {
                             field: 'State', title: '状态', width: 100, align: 'left',
@@ -67,7 +67,7 @@
 
         $.ajax({
             datatype: "text",
-            url: "../ashx/agentsSelect.ashx?i=" + Math.random(),
+            url: "../ashx/agencysSelect.ashx?i=" + Math.random(),
             data: {
                 type: "get",
                 agentId: $("#txt_SearchAgentsId").val(),

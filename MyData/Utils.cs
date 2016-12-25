@@ -406,6 +406,11 @@ namespace MyData
             int num = ds.Rows.Count;
             return "{ \"total\":" + num.ToString() + ",\"rows\":" + Newtonsoft.Json.JsonConvert.SerializeObject(ds) + "}";
         }
+        public static string EasyuiDataGridJsonForList<T>(List<T> list)
+        {
+            int num = list.Count;
+            return "{ \"total\":" + num.ToString() + ",\"rows\":" + Newtonsoft.Json.JsonConvert.SerializeObject(list) + "}";
+        }
         public static string EasyuiDataGridJson(DataTable dt, int total)
         {
             return "{ \"total\":" + total.ToString() + ",\"rows\":" + Newtonsoft.Json.JsonConvert.SerializeObject(dt) + "}";

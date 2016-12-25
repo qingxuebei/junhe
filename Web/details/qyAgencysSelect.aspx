@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="agentsSelect.aspx.cs" Inherits="Web.details.agentsSelect" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="qyAgencysSelect.aspx.cs" Inherits="Web.details.qyAgencysSelect" %>
 
 <!DOCTYPE html>
 
@@ -7,23 +7,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <script src="../scripts/alljs.js"></script>
-    <script src="../js/agentsSelect.js"></script>
-    <%--<style type="text/css">
-        td {
-            border: 1px solid #000;
-        }
-    </style>--%>
+    <script src="../js/qyAgencysSelect.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
         <div id="tab_dg" style="height: auto; width: 100%;">
             <div id="tb_ddjl" style="padding: 5px; height: auto">
-                <input class="easyui-textbox" id="txt_SearchAgentsId" data-options="prompt: '代理人编号'" style="width: 200px; height: 25px" />
+                <input class="easyui-textbox" id="txt_SearchAgentsId" data-options="prompt: '代理商编号'" style="width: 200px; height: 25px" />
                 <span></span>
                 <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
             </div>
             <div id="cc" class="easyui-layout" style="width: 100%; height: 500px;">
-                <div data-options="region:'east',title:'代理人详情',split:true" style="width: 20%;">
+                <div data-options="region:'east',title:'代理商详情',split:true" style="width: 20%;">
                     <table>
                         <tr>
                             <td>代理人编号:</td>
@@ -75,8 +70,8 @@
                         </tr>
                     </table>
                 </div>
-                <div data-options="region:'center',title:'小组VIP概要'" style="padding: 5px; background: #eee; width: 80%">
-                    <div class="easyui-datagrid" id="dg"></div>
+                <div data-options="region:'center',title:'区域概要'" style="padding: 5px; background: #eee; width: 80%">
+                    <div class="easyui-treegrid" id="dg"></div>
                 </div>
             </div>
 

@@ -11,7 +11,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div id="div_id" style="display: none">
             <table style="width: 100%; border: 0">
                 <tr>
                     <td>

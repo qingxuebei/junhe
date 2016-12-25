@@ -66,6 +66,16 @@
 	                    "menuname": "小组VIP概要",
 	                    "icon": "icon-nav",
 	                    "url": "/details/agentsSelect.aspx"
+	                }, {
+	                    "menuid": "21",
+	                    "menuname": "市场会员概要",
+	                    "icon": "icon-nav",
+	                    "url": "/details/agencysSelect.aspx"
+	                }, {
+	                    "menuid": "21",
+	                    "menuname": "区域会员概要",
+	                    "icon": "icon-nav",
+	                    "url": "/details/qyagencysSelect.aspx"
 	                }]
 	            }]
         };

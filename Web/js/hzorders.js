@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    document.getElementById("div_id").style.display = "";
+
     $("#txt_Year1").combobox("setValue", getCurrentYear());
     $("#txt_Month1").combobox("setValue", getCurrentMonth());
     $("#txt_Year2").combobox("setValue", getCurrentYear());

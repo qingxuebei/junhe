@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    document.getElementById("div_id").style.display = "";
+
     $("#dg").datagrid({
         url: "../ashx/products.ashx?i=cx" + Math.random(),
         toolbar: "#tb_lzd",
