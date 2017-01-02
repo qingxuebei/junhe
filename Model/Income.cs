@@ -40,5 +40,11 @@ namespace Model
         public decimal RegionYum { get; set; }
         public decimal RegionServiceYum { get; set; }
         public decimal IncomeMoney { get; set; }
+
+        public decimal AllSalesMoney { get; set; }
+
+        public decimal NearlyTwoMonthsMoney { get; set; }
+
+        public decimal NearlyFiveMonthsMoney { get; set; }
     }
 }

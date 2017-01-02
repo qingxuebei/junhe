@@ -111,10 +111,22 @@ namespace BLL
                 + MyData.Utils.getMonthFirstDay().AddMonths(-1) + "' and '"
                 + MyData.Utils.getMonthFirstDay() + "'", tr);
         }
+        public Decimal getTwoMonthPrice(String agentId, OleDbTransaction tr)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
+                + MyData.Utils.getMonthFirstDay().AddMonths(-2) + "' and '"
+                + MyData.Utils.getMonthFirstDay() + "'", tr);
+        }
         public Decimal getThreeMonthPrice(String agentId, OleDbTransaction tr)
         {
             return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
                 + MyData.Utils.getMonthFirstDay().AddMonths(-3) + "' and '"
+                + MyData.Utils.getMonthFirstDay() + "'", tr);
+        }
+        public Decimal getFiveMonthPrice(String agentId, OleDbTransaction tr)
+        {
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate between '"
+                + MyData.Utils.getMonthFirstDay().AddMonths(-5) + "' and '"
                 + MyData.Utils.getMonthFirstDay() + "'", tr);
         }
         public Decimal getSixMonthPrice(String agentId, OleDbTransaction tr)
@@ -125,7 +137,7 @@ namespace BLL
         }
         public Decimal getAllMonthPrice(String agentId, OleDbTransaction tr)
         {
-            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "'", tr);
+            return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate<'" + MyData.Utils.getMonthFirstDay() + "'", tr);
         }
         public Orders getOrdersById(String id)
         {

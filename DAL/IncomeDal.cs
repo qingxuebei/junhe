@@ -20,6 +20,20 @@ namespace DAL
         {
             return MyData.DataBase.Base_dt("select * from Income where 1=1 " + strWhere);
         }
+        public List<Income> getIncomeList(String strWhere)
+        {
+            return MyData.DataBase.Base_list<Income>("select * from Income where 1=1 " + strWhere);
+        }
+        public List<Income> getIncomeList(String strWhere, OleDbTransaction tr)
+        {
+            return MyData.DataBase.Base_list<Income>("select * from Income where 1=1 " + strWhere,tr);
+        }
+        public Decimal getLastAllSalesMoney(String str_sql, OleDbTransaction tr)
+        {
+            String sql = "select sum(SalesMoney) from Income where State=1 " + str_sql;
+            String ret = MyData.DataBase.Base_Scalar(sql, tr);
+            return Convert.ToDecimal(ret == "" ? "0" : ret);
+        }
         public void InsertOrUpdateIncome(OleDbTransaction tr, Model.Income income, bool isInsert)
         {
             if (isInsert)

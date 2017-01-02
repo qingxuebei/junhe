@@ -3,6 +3,7 @@ using MyData;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -195,6 +196,64 @@ namespace DAL
         {
             String sql = "update [dbo].[Agents] set Rank='" + agents.Rank + "',CareerStatus='" + agents.CareerStatus + "',State='" + agents.State + "' where Id='" + agents.Id + "'";
             return DataBase.Base_cmd(sql);
+        }
+
+        public void UpdateForJisuan(List<Agents> agentsList, OleDbTransaction tr)
+        {
+            foreach (Agents agents in agentsList)
+            {
+                String sql = @"UPDATE [dbo].[Agents]
+                               SET [Name] = '{0}'
+                                  ,[Province] = '{1}'
+                                  ,[City] = '{2}'
+                                  ,[Village] = '{3}'
+                                  ,[Birthday] = '{4}'
+                                  ,[CareerStatus] = '{5}'
+                                  ,[JoinDate] = '{6}'
+                                  ,[Rank] = '{7}'
+                                  ,[RefereeId] = '{8}'
+                                  ,[RefereeName] = '{9}'
+                                  ,[AgencyId] = '{10}'
+                                  ,[AgencyName] = '{11}'
+                                  ,[AccountBank] = '{12}'
+                                  ,[AccountBankBranch] = '{13}'
+                                  ,[Account] = '{14}'
+                                  ,[Address] = '{15}'
+                                  ,[ZipCode] = '{16}'
+                                  ,[Phone] = '{17}'
+                                  ,[CreateTime] = '{18}'
+                                  ,[CreatePerson] = '{19}'
+                                  ,[UpdateTime] = '{20}'
+                                  ,[UpdatePerson] = '{21}'
+                                  ,[State] = {22}
+                                  ,[AgentsStatus] = {23}
+                             WHERE Id='" + agents.Id + "'";
+                sql = String.Format(sql, agents.Name
+                                        , agents.Province
+                                        , agents.City
+                                        , agents.Village
+                                        , agents.Birthday
+                                        , agents.CareerStatus
+                                        , agents.JoinDate
+                                        , agents.Rank
+                                        , agents.RefereeId
+                                        , agents.RefereeName
+                                        , agents.AgencyId
+                                        , agents.AgencyName
+                                        , agents.AccountBank
+                                        , agents.AccountBankBranch
+                                        , agents.Account
+                                        , agents.Address
+                                        , agents.ZipCode
+                                        , agents.Phone
+                                        , agents.CreateTime
+                                        , agents.CreatePerson
+                                        , DateTime.Now
+                                        , agents.UpdatePerson
+                                        , agents.State
+                                        , agents.AgentsStatus);
+                DataBase.Base_cmd(sql, tr);
+            }
         }
     }
 }

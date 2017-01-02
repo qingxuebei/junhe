@@ -38,5 +38,10 @@ namespace MyData
     {
         正常 = 1
     }
+    public enum LogMonthCreateState
+    {
+        执行中 = 0,
+        执行完毕 = 1
+    }
 }
 

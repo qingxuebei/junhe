@@ -668,7 +668,16 @@ namespace MyData
         public static string getAgentsId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
         public static string getAgencyId() { return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString(); }
 
-        public static Int32 getYearMonth() { return Convert.ToInt32(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()); }
+        public static Int32 getYearMonth()
+        {
+            DateTime date = DateTime.Now;
+            String month = date.Month.ToString();
+            if (month.Length < 2)
+            {
+                month = "0" + month;
+            }
+            return Convert.ToInt32(date.Year + month);
+        }
 
         /// <summary>
         /// DataTable to List
@@ -734,6 +743,16 @@ namespace MyData
             DateTime now = DateTime.Now;
             DateTime d1 = new DateTime(now.Year, now.Month, 1);
             return d1;
+        }
+        public static int getLastYearMonth()
+        {
+            DateTime date = DateTime.Now.AddMonths(-1);
+            String month = date.Month.ToString();
+            if (month.Length < 2)
+            {
+                month = "0" + month;
+            }
+            return Convert.ToInt32(date.Year + month);
         }
     }
 }

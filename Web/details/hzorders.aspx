@@ -11,8 +11,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div id="div_id" style="display: none">
-            <div class="easyui-tabs" id="tab_dg" style="height: auto; width: 100%;">
+        <div id="div_id" style="display: none;height: auto; width: 100%;">
+            <div class="easyui-tabs" id="tab_dg" style="height: auto; width: 99%;">
                 <div title="产品销售汇总" style="height: auto; width: auto;" data-options="iconCls:'icon-standard-application-home'">
                     <div id="tb_ddjl" style="padding: 5px; height: auto">
                         <select id="txt_Year1" class="easyui-combobox" name="txt_Year1" style="width: 100px;">

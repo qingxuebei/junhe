@@ -47,6 +47,7 @@
     <Compile Include="DictBankBLL.cs" />
     <Compile Include="DictRegionBLL.cs" />
     <Compile Include="IncomeBLL.cs" />
+    <Compile Include="LogMonthCreateBLL.cs" />
     <Compile Include="OrdersBLL.cs" />
     <Compile Include="OrdersDetailBLL.cs" />
     <Compile Include="ProductsBLL.cs" />
