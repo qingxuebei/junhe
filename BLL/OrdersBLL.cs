@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using DAL;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -101,6 +102,10 @@ namespace BLL
         //    return false;
         //}
 
+        public Decimal SumPrice(String strWhere)
+        {
+            return new DAL.OrdersDal().SumPrice(strWhere);
+        }
         public Decimal getCurrentPrice(String agentId)
         {
             return new DAL.OrdersDal().SumPrice(" and AgentId='" + agentId + "' and YearMonthDate>'" + MyData.Utils.getMonthFirstDay() + "'");

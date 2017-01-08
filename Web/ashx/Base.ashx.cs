@@ -59,6 +59,12 @@ namespace Web.ashx
                     case "HuiZongOrders":
                         context.Response.Write(HuiZongOrders(context));
                         break;
+                    case "sumPrice":
+                        context.Response.Write(sumPrice(context));
+                        break;
+                    case "sumPerson":
+                        context.Response.Write(sumPerson(context));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -155,7 +161,26 @@ namespace Web.ashx
             }
             return null;
         }
-
+        public String sumPrice(HttpContext context)
+        {
+            List<Decimal> list = new List<decimal>();
+            //计算当天订单金额
+            String str1 = " and State=1 and CreateTime>='" + DateTime.Now.ToShortDateString() + "'";
+            list.Add(new BLL.OrdersBLL().SumPrice(str1));
+            //计算当月的订单金额
+            String str2 = " and State=1 and YearMonth=" + MyData.Utils.getYearMonth();
+            list.Add(new BLL.OrdersBLL().SumPrice(str2));
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+        public String sumPerson(HttpContext context)
+        {
+            List<int> list = new List<int>();
+            String str1 = "  State=1 and CreateTime>='" + DateTime.Now.ToShortDateString() + "'";
+            list.Add(new BLL.AgentsBLL().GetRecordCount(str1));
+            String str2 = "  State=1 and CreateTime>='" + MyData.Utils.getMonthFirstDay() + "'";
+            list.Add(new BLL.AgentsBLL().GetRecordCount(str2));
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
         public bool IsReusable
         {
             get

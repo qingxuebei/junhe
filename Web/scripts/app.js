@@ -68,4 +68,10 @@ function getCurrentMonth() {
     month = (month < 10 ? "0" + month : month);
     return month;
 }
+function StringIsNull(StrValue, ToStr) {
+    if (StrValue == null || StrValue == "") {
+        return ToStr;
+    } else
+        return StrValue;
+}
 

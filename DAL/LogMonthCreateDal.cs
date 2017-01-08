@@ -15,6 +15,17 @@ namespace DAL
             String sql = "select * from LogMonthCreate where 1=1 " + sqlWhere;
             return DataBase.Base_list<LogMonthCreate>(sql);
         }
+        public bool IsCreate()
+        {
+            String sql = " and YearMonth=" + Utils.getLastYearMonth() + " order by CreateTime desc";
+            var list = getLogMonthCreateList(sql);
+            if (list.Count > 0)
+            {
+                if (list.First().State == (int)MyData.LogMonthCreateState.执行完毕)
+                { return true; }
+            }
+            return false;
+        }
         public void Insert(Model.LogMonthCreate logMonthCreate)
         {
             String sql = @"INSERT INTO [dbo].[LogMonthCreate]

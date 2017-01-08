@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +81,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -98,8 +106,10 @@
     <Content Include="details\agencysSelect.aspx" />
     <Content Include="details\agents.aspx" />
     <Content Include="details\agentsSelect.aspx" />
+    <Content Include="details\backHome.aspx" />
     <Content Include="details\hzorders.aspx" />
     <Content Include="details\income.aspx" />
+    <Content Include="details\logMonthCreate.aspx" />
     <Content Include="details\orders.aspx" />
     <Content Include="details\products.aspx" />
     <Content Include="details\qyAgencysSelect.aspx" />
@@ -108,8 +118,10 @@
     <Content Include="js\agencysSelect.js" />
     <Content Include="js\agents.js" />
     <Content Include="js\agentsSelect.js" />
+    <Content Include="js\backHome.js" />
     <Content Include="js\hzorders.js" />
     <Content Include="js\income.js" />
+    <Content Include="js\logMonthCreate.js" />
     <Content Include="js\orders.js" />
     <Content Include="js\products.js" />
     <Content Include="js\qyAgencysSelect.js" />
@@ -126,6 +138,8 @@
     <Content Include="ashx\agentsSelect.ashx" />
     <Content Include="ashx\agencysSelect.ashx" />
     <Content Include="ashx\qyAgencysSelect.ashx" />
+    <Content Include="ashx\logMonthCreate.ashx" />
+    <Content Include="Log4Net.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -235,6 +249,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ashx\logMonthCreate.ashx.cs">
+      <DependentUpon>logMonthCreate.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="details\backHome.aspx.cs">
+      <DependentUpon>backHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="details\backHome.aspx.designer.cs">
+      <DependentUpon>backHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="details\logMonthCreate.aspx.cs">
+      <DependentUpon>logMonthCreate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="details\logMonthCreate.aspx.designer.cs">
+      <DependentUpon>logMonthCreate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LogHelper.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -368,6 +400,9 @@
       <Project>{a56bfc85-1e52-4553-b9a6-fb664e14b773}</Project>
       <Name>MyData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

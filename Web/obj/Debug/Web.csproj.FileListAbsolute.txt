@@ -35,7 +35,6 @@ D:\network\Junhe\Web\bin\Model.dll
 D:\network\Junhe\Web\bin\MyData.dll
 D:\network\Junhe\Web\bin\NPOI.dll
 D:\network\Junhe\Web\bin\dotnetCHARTING.dll
-D:\network\Junhe\Web\bin\Newtonsoft.Json.dll
 D:\network\Junhe\Web\bin\BLL.pdb
 D:\network\Junhe\Web\bin\Model.pdb
 D:\network\Junhe\Web\bin\MyData.pdb

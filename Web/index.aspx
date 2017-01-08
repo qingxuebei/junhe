@@ -23,28 +23,16 @@
                     "menus": [
                         {
                             "menuid": "3",
-                            "menuname": "产品管理",
-                            "icon": "icon-nav",
-                            "url": "/details/products.aspx"
-                        },
-                        {
-                            "menuid": "3",
                             "menuname": "会员管理",
                             "icon": "icon-nav",
                             "url": "/details/agents.aspx"
                         },
-                        //{
-                        //    "menuid": "3",
-                        //    "menuname": "代理商管理",
-                        //    "icon": "icon-nav",
-                        //    "url": "/details/agencys.aspx"
-                        //},
                         {
                             "menuid": "3",
                             "menuname": "订单管理",
                             "icon": "icon-nav",
                             "url": "/details/orders.aspx"
-                        },
+                        }
                     ]
                 },
 	            {
@@ -77,7 +65,27 @@
 	                    "icon": "icon-nav",
 	                    "url": "/details/qyagencysSelect.aspx"
 	                }]
-	            }]
+	            },
+                {
+                    "menuid": "1",
+                    "icon": "icon-sys",
+                    "menuname": "内容管理",
+                    "menus": [
+                        {
+                            "menuid": "3",
+                            "menuname": "产品管理",
+                            "icon": "icon-nav",
+                            "url": "/details/products.aspx"
+                        },
+                        {
+                            "menuid": "3",
+                            "menuname": "月度任务",
+                            "icon": "icon-nav",
+                            "url": "/details/logMonthCreate.aspx"
+                        }
+                    ]
+                },
+            ]
         };
 
         //设置登录窗口
@@ -188,7 +196,8 @@
     <div id="mainPanle" region="center" style="background: #eee; overflow-y: hidden">
         <div id="tabs" class="easyui-tabs" fit="true" border="false">
             <div title="欢迎使用" style="padding: 20px; overflow: hidden; color: red;">
-                <h1 style="font-size: 24px;">君和软件</h1>
+                <%--<h1 style="font-size: 24px;">君和软件</h1>--%>
+                <iframe id="sysMain" frameborder="0" name="sysMain" width="100%" height="600px" src="details/backHome.aspx"></iframe>
             </div>
         </div>
     </div>

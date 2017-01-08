@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using Model;
+using log4net;
 
 namespace Web
 {
@@ -22,13 +23,16 @@ namespace Web
     */
     public class Global : System.Web.HttpApplication
     {
+        private static readonly ILog logs = LogManager.GetLogger(typeof(Global));
         //在应用程序启动时运行的代码  
         protected void Application_Start(object sender, EventArgs e)
         {
+            // Code that runs on application startup
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(Server.MapPath("Log4Net.config")));
             //定时器
             System.Timers.Timer myTimer = new System.Timers.Timer();
             myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
-            myTimer.Interval = 1000;
+            myTimer.Interval = 60000;
             myTimer.Enabled = true;
         }
         private void myTimer_Elapsed(object source, ElapsedEventArgs e)
@@ -40,12 +44,14 @@ namespace Web
             catch (Exception ex)
             {
                 WebForm1.html = ex.Message;
+                logs.Error("Task error:"+ex.Message);
             }
         }
         private void RunTheTask()
         {
             //在这里写你需要执行的任务
             WebForm1.html = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":AutoTask is Working!";
+            logs.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":AutoTask is Working!");
             try
             {
                 //如果为1号则执行
@@ -62,6 +68,7 @@ namespace Web
             catch (Exception ex)
             {
                 WebForm1.html = "执行失败" + ex.Message;
+                logs.Error("Task error:" + ex.Message);
             }
 
 
@@ -97,7 +104,7 @@ namespace Web
         protected void Application_End(object sender, EventArgs e)
         {
             WebForm1.html = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":Application End!";
-
+            logs.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":AutoTask End!");
             //下面的代码是关键，可解决IIS应用程序池自动回收的问题  
 
             Thread.Sleep(1000);

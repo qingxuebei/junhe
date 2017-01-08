@@ -48,6 +48,11 @@ namespace Web.ashx
         }
         public override String add(HttpContext context)
         {
+            //判断上月的的定时任务是否处理完毕
+            if (!new BLL.LogMonthCreateBLL().IsCreate())
+            {
+                return "上月会员职级未升级完毕，暂时不允许录入订单！";
+            }
             Model.Orders orders = new Model.Orders();
             String AgentId = context.Request.Params["AgentId"].ToString();
             String Price = context.Request.Params["Price"].ToString();

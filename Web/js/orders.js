@@ -222,21 +222,23 @@ function detail(index) {
     }
 }
 function update(index) {
-    $("#dg").datagrid("selectRow", index);
-    var row = $("#dg").datagrid("getSelected");
-    if (row) {
-        $.ajax({
-            datatype: "text",
-            url: "../ashx/orders.ashx?type=update&id=" + row.Id + "&agentsId=" + row.AgentId + "&i=cx" + Math.random(),
-            success: function (mess) {
-                if (mess == "0") {
-                    $.messager.alert("提醒", "保存成功！", "info");
-                    $("#lbtn_get").click();
-                } else {
-                    alert(mess);
+    if (confirm("确定要作废？")) {
+        $("#dg").datagrid("selectRow", index);
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $.ajax({
+                datatype: "text",
+                url: "../ashx/orders.ashx?type=update&id=" + row.Id + "&agentsId=" + row.AgentId + "&i=cx" + Math.random(),
+                success: function (mess) {
+                    if (mess == "0") {
+                        $.messager.alert("提醒", "保存成功！", "info");
+                        $("#lbtn_get").click();
+                    } else {
+                        alert(mess);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
 function deleteDetail(index) {

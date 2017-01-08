@@ -13,6 +13,10 @@ namespace BLL
         {
             return new DAL.LogMonthCreateDal().getLogMonthCreateList(sqlWhere);
         }
+        public bool IsCreate()
+        {
+            return new DAL.LogMonthCreateDal().IsCreate();
+        }
         public String zhixing(LogMonthCreate logMonthCreate)
         {
             //判断本月是否存在已生成记录
