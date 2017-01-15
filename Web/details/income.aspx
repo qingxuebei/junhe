@@ -42,6 +42,10 @@
                                 <option value="2">合伙人</option>
                             </select>
                             <span></span>
+                            <input class="easyui-textbox" id="txt_SearchId" data-options="prompt: '会员编号'" style="width: 100px; height: 25px" />
+                            <span></span>
+                            <input class="easyui-textbox" id="txt_SearchName" data-options="prompt: '姓名'" style="width: 100px; height: 25px" />
+                            <span></span>
                             <a href="#" class="easyui-linkbutton" id="lbtn_get" data-options="iconCls:'icon-search'">搜索</a>
                             <a href="#" class="easyui-linkbutton" id="lbtn_export" data-options="iconCls:'icon-excel'">导出</a>
                         </div>

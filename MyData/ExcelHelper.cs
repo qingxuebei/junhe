@@ -10,6 +10,8 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System.Diagnostics;
 using System.Reflection;
+using Model;
+
 namespace MyData
 {
     public static class ExcelHelper
@@ -62,7 +64,7 @@ namespace MyData
         public static string dao_name()
         {
             return "数据导出.xls";
-        } 
+        }
         /// <summary>
         /// DataTable导出到Excel(方法二)
         /// </summary>
@@ -79,7 +81,7 @@ namespace MyData
                 ISheet sheet1 = hssfworkbook.GetSheet("数据");
                 InsertRows(sheet1, 1, dt.Rows.Count, hssfworkbook, dt.Columns.Count);
 
-               
+
                 //列标题
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
@@ -109,12 +111,12 @@ namespace MyData
 
         }
 
-        public static void Excel_daochu(DataTable dt, string filepath,bool isCg)//常规
+        public static void Excel_daochu(DataTable dt, string filepath, bool isCg)//常规
         {
             try
             {
                 string wj = "";
-                if (isCg)  wj = "常规";
+                if (isCg) wj = "常规";
                 FileStream file = new FileStream(filepath + "导出模板" + wj + ".xls", FileMode.Open, FileAccess.Read);
 
                 HSSFWorkbook hssfworkbook = new HSSFWorkbook(file);
@@ -157,7 +159,7 @@ namespace MyData
         /// <param name="dt">DataTable</param>
         /// <param name="filepath">导出文件路径</param>
         /// <param name="btname">标题</param>
-        public static void Excel_daochu(DataTable dt, string filepath,string btname)
+        public static void Excel_daochu(DataTable dt, string filepath, string btname)
         {
             try
             {
@@ -178,8 +180,8 @@ namespace MyData
                     //设置单元格的宽度
                     sheet1.SetColumnWidth(0, 30 * 256);
                     //合并单元格
-                    sheet1.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, dt.Columns.Count-1));
-                   
+                    sheet1.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, dt.Columns.Count - 1));
+
                     //设置单元格内容
                     cell.SetCellValue(btname);
                     ICellStyle style = hssfworkbook.CreateCellStyle();
@@ -203,7 +205,7 @@ namespace MyData
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
                     sheet1.GetRow(columnrow).GetCell(i).SetCellValue(dt.Columns[i].ColumnName);
-                   
+
                 }
                 //写入数据
                 for (int j = 1; j <= dt.Rows.Count; j++)
@@ -287,7 +289,7 @@ namespace MyData
         /// <param name="filepath">导出文件路径</param>
         /// <param name="btname">标题</param>
         /// <param name="filename">导出文件名称</param>
-        public static void Excel_daochu(DataTable dt, string filepath, string btname,string filename)
+        public static void Excel_daochu(DataTable dt, string filepath, string btname, string filename)
         {
             try
             {
@@ -353,7 +355,7 @@ namespace MyData
                     filename = dao_name();
                 file = new FileStream(filepath + filename, FileMode.Create);
                 hssfworkbook.Write(file);
-                
+
                 file.Close();
             }
             catch (Exception)
@@ -363,7 +365,7 @@ namespace MyData
             }
 
         }
-        public static void ExcSF_daochu(List<DataTable> Ldt, string filepath, string filename,int rowDataCount)
+        public static void ExcSF_daochu(List<DataTable> Ldt, string filepath, string filename, int rowDataCount)
         {
             try
             {
@@ -383,14 +385,14 @@ namespace MyData
                     ////设置单元格的高度
                     //row.Height = 30 * 20;
                     //设置单元格的宽度
-                   // sheet1.SetColumnWidth(0, 30 * 256);
+                    // sheet1.SetColumnWidth(0, 30 * 256);
                     //合并单元格
                     IRow row = sheet1.GetRow(datarow);
                     ICell cell = row.GetCell(0);
-                    row.Height = 30 * 20; 
+                    row.Height = 30 * 20;
                     sheet1.SetColumnWidth(0, 30 * 270);
                     sheet1.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(datarow, datarow, 0, item.Columns.Count - 6));
-                    string btname = "--收款单位：" + item.Rows[0]["Payee"].ToString() + "\r\n--付款单位：" + item.Rows[0]["付款单位"].ToString()+@"\n" + "--付款时间：" + item.Rows[0]["ChargingTime"].ToString() +Environment.NewLine+ "--付款金额：" + item.Rows[0]["PaidIn"].ToString() + "";
+                    string btname = "--收款单位：" + item.Rows[0]["Payee"].ToString() + "\r\n--付款单位：" + item.Rows[0]["付款单位"].ToString() + @"\n" + "--付款时间：" + item.Rows[0]["ChargingTime"].ToString() + Environment.NewLine + "--付款金额：" + item.Rows[0]["PaidIn"].ToString() + "";
                     //设置单元格内容
                     cell.SetCellValue(btname);
                     ICellStyle style = hssfworkbook.CreateCellStyle();
@@ -433,8 +435,8 @@ namespace MyData
                         datarow++;
                     }
                 }
-               
-                
+
+
                 //for (int q = 0; q < dt.Columns.Count; q++)
                 //{
                 //     sheet1.AutoSizeColumn(q);
@@ -571,6 +573,191 @@ namespace MyData
             return dt;
         }
 
-  
+        /// <summary>
+        /// 导出收入明细
+        /// </summary>
+        public static void Excel_IncomeMX(String yearMonth, List<Income> list, string openFilePath, String saveFilePath)
+        {
+            try
+            {
+                FileStream file = new FileStream(openFilePath, FileMode.Open, FileAccess.Read);
+                HSSFWorkbook hssfworkbook = new HSSFWorkbook(file);
+
+                hssfworkbook.SetSheetName(0, yearMonth);
+                ISheet sheet1 = hssfworkbook.GetSheet(yearMonth);
+                InsertRows2(sheet1, 1, list.Count);
+
+                //写入数据
+                for (int i = 0; i < list.Count; i++)
+                {
+                    IRow row = sheet1.GetRow(1 + i);
+                    row.GetCell(0).SetCellValue(list[i].YearMonth);
+                    row.GetCell(1).SetCellValue(list[i].AgentId);
+                    row.GetCell(2).SetCellValue(list[i].AgentName);
+                    row.GetCell(3).SetCellValue(list[i].CareerStatus);
+                    row.GetCell(4).SetCellValue(list[i].Rank);
+                    row.GetCell(5).SetCellValue((double)list[i].SalesServiceMoney);
+                    row.GetCell(6).SetCellValue((double)list[i].PersonalServiceMoney);
+                    row.GetCell(7).SetCellValue((double)list[i].MarketServiceMoney);
+                    row.GetCell(8).SetCellValue((double)list[i].RegionServiceMoney);
+                    row.GetCell(9).SetCellValue((double)list[i].RegionServiceYum);
+                    row.GetCell(10).SetCellValue((double)list[i].IncomeMoney);
+                }
+
+                sheet1.ForceFormulaRecalculation = true;
+                file = new FileStream(saveFilePath, FileMode.Create);
+                hssfworkbook.Write(file);
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+        /// <summary>
+        /// 导出会员概要
+        /// </summary>
+        public static void Excel_HuiyuanGY(String yearMonth, List<Income> list, string openFilePath, String saveFilePath)
+        {
+            try
+            {
+                FileStream file = new FileStream(openFilePath, FileMode.Open, FileAccess.Read);
+                HSSFWorkbook hssfworkbook = new HSSFWorkbook(file);
+
+                hssfworkbook.SetSheetName(0, yearMonth);
+                ISheet sheet1 = hssfworkbook.GetSheet(yearMonth);
+                InsertRows2(sheet1, 1, list.Count);
+
+                //写入数据
+                for (int i = 0; i < list.Count; i++)
+                {
+                    IRow row = sheet1.GetRow(1 + i);
+                    row.GetCell(0).SetCellValue(list[i].YearMonth);
+                    row.GetCell(1).SetCellValue(list[i].AgentId);
+                    row.GetCell(2).SetCellValue(list[i].AgentName);
+                    row.GetCell(3).SetCellValue(list[i].CareerStatus);
+                    row.GetCell(4).SetCellValue(list[i].Rank);
+                    row.GetCell(5).SetCellValue(list[i].RefereeId);
+                    row.GetCell(6).SetCellValue(list[i].RefereeName);
+                    row.GetCell(7).SetCellValue(list[i].AgencyId);
+                    row.GetCell(8).SetCellValue(list[i].AgencyName);
+                }
+
+                sheet1.ForceFormulaRecalculation = true;
+                file = new FileStream(saveFilePath, FileMode.Create);
+                hssfworkbook.Write(file);
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// 导出产品汇总
+        /// </summary>
+        public static void Excel_ChanpinHZ(String yearMonth, List<OrdersDetail> list, string openFilePath, String saveFilePath)
+        {
+            try
+            {
+                FileStream file = new FileStream(openFilePath, FileMode.Open, FileAccess.Read);
+                HSSFWorkbook hssfworkbook = new HSSFWorkbook(file);
+
+                hssfworkbook.SetSheetName(0, yearMonth);
+                ISheet sheet1 = hssfworkbook.GetSheet(yearMonth);
+                InsertRows2(sheet1, 1, list.Count);
+
+                //写入数据
+                for (int i = 0; i < list.Count; i++)
+                {
+                    IRow row = sheet1.GetRow(1 + i);
+                    row.GetCell(0).SetCellValue(list[i].ProductName);
+                    row.GetCell(1).SetCellValue((double)list[i].UnitPrice);
+                    row.GetCell(2).SetCellValue(list[i].Num);
+                    row.GetCell(3).SetCellValue((double)list[i].Price);
+                }
+
+                sheet1.ForceFormulaRecalculation = true;
+                file = new FileStream(saveFilePath, FileMode.Create);
+                hssfworkbook.Write(file);
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 导出订单汇总
+        /// </summary>
+        public static void Excel_DingdanHZ(String yearMonth, DataTable dt, string openFilePath, String saveFilePath)
+        {
+            try
+            {
+                FileStream file = new FileStream(openFilePath, FileMode.Open, FileAccess.Read);
+                HSSFWorkbook hssfworkbook = new HSSFWorkbook(file);
+
+                hssfworkbook.SetSheetName(0, yearMonth);
+                ISheet sheet1 = hssfworkbook.GetSheet(yearMonth);
+                InsertRows2(sheet1, 1, dt.Rows.Count);
+
+                //写入数据
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    IRow row = sheet1.GetRow(1 + i);
+                    row.GetCell(0).SetCellValue(dt.Rows[i]["AgentId"].ToString());
+                    row.GetCell(1).SetCellValue(dt.Rows[i]["AgentName"].ToString());
+                    row.GetCell(2).SetCellValue(dt.Rows[i]["CareerStatus"].ToString());
+                    row.GetCell(3).SetCellValue(dt.Rows[i]["Rank"].ToString());
+                    var state = dt.Rows[i]["State"].ToString();
+                    row.GetCell(4).SetCellValue(state == "0" ? "已删除" : (state == "1" ? "正常" : (state == "-1" ? "新添加" : "")));
+                    row.GetCell(5).SetCellValue(dt.Rows[i]["CountOrders"].ToString());
+                    row.GetCell(6).SetCellValue(dt.Rows[i]["Price"].ToString());
+                }
+
+                sheet1.ForceFormulaRecalculation = true;
+                file = new FileStream(saveFilePath, FileMode.Create);
+                hssfworkbook.Write(file);
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        static void InsertRows2(ISheet targetSheet, int fromRowIndex, int rowCount)
+        {
+            if (rowCount != 0)
+            {
+                targetSheet.ShiftRows(fromRowIndex + 1, targetSheet.LastRowNum, rowCount, true, false);
+                IRow rowSource = targetSheet.GetRow(fromRowIndex);
+                ICellStyle rowstyle = rowSource.RowStyle;
+
+                for (int rowIndex = fromRowIndex; rowIndex <= fromRowIndex + rowCount; rowIndex++)
+                {
+                    IRow rowInsert = targetSheet.CreateRow(rowIndex);
+                    //rowInsert.RowStyle = rowstyle;
+                    //rowInsert.Height = rowSource.Height;
+                    for (int colIndex = 0; colIndex < rowSource.LastCellNum; colIndex++)
+                    {
+                        ICell cellSource = rowSource.GetCell(colIndex);
+                        ICell cellInsert = rowInsert.CreateCell(colIndex);
+                        if (cellSource != null)
+                        {
+                            cellInsert.CellStyle = cellSource.CellStyle;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

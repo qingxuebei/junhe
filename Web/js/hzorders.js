@@ -34,6 +34,21 @@
         });
     });
 
+    $('#lbtn_cpxs_export').bind('click', function () {
+        $.ajax({
+            datatype: "text",
+            url: "../ashx/hzorders.ashx?i=" + Math.random(),
+            data: {
+                type: "export",
+                style: "cp",
+                yearMonth: $("#txt_Year1").combobox('getValue') + $("#txt_Month1").combobox('getValue')
+            },
+            success: function (mess) {
+                window.open(mess);
+            }
+        });
+    });
+
     $('#lbtn_ydjd').bind('click', function () {
         $("#dg_ydjd").datagrid({
             url: "../ashx/Base.ashx?i=cx" + Math.random(),
@@ -50,8 +65,8 @@
                 yearMonth: $("#txt_Year2").combobox('getValue') + $("#txt_Month2").combobox('getValue')
             },
             columns: [[
-                        { field: 'AgentId', title: '代理人编码', width: 100, align: 'left' },
-                        { field: 'AgentName', title: '代理人姓名', width: 100, align: 'left' },
+                        { field: 'AgentId', title: '会员编码', width: 100, align: 'left' },
+                        { field: 'AgentName', title: '会员姓名', width: 100, align: 'left' },
                         { field: 'CareerStatus', title: '事业状态', width: 100, align: 'left' },
                         { field: 'Rank', title: '职级', width: 100, align: 'left' },
                         {
@@ -76,6 +91,21 @@
             loadFilter: function (data) {
                 if (data)
                     return data;
+            }
+        });
+    });
+
+    $('#lbtn_ydjd_export').bind('click', function () {
+        $.ajax({
+            datatype: "text",
+            url: "../ashx/hzorders.ashx?i=" + Math.random(),
+            data: {
+                type: "export",
+                style:"dd",
+                yearMonth: $("#txt_Year2").combobox('getValue') + $("#txt_Month2").combobox('getValue')
+            },
+            success: function (mess) {
+                window.open(mess);
             }
         });
     });

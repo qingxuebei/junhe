@@ -20,7 +20,8 @@
         queryParams: {
             type: "get",
             yearMonth: $("#txt_Year").combobox('getValue') + $("#txt_Month").combobox('getValue'),
-            u_type: $("#txt_type").combobox('getValue')
+            u_type: $("#txt_type").combobox('getValue'),
+            wherestr: $("#txt_SearchId").val() + "," + $("#txt_SearchName").val()
         },
         columns: [[
                     { field: "Id", checkbox: false, hidden: true },
@@ -56,7 +57,8 @@
         $('#dg').datagrid('load', {
             type: "get",
             yearMonth: $("#txt_Year").combobox('getValue') + $("#txt_Month").combobox('getValue'),
-            u_type: $("#txt_type").combobox('getValue')
+            u_type: $("#txt_type").combobox('getValue'),
+            wherestr: $("#txt_SearchId").val() + "," + $("#txt_SearchName").val()
         });
     });
     $('#lbtn_export').bind('click', function () {
@@ -65,8 +67,10 @@
             url: "../ashx/income.ashx?i=" + Math.random(),
             data: {
                 type: "export",
+                style: "mx",
                 yearMonth: $("#txt_Year").combobox('getValue') + $("#txt_Month").combobox('getValue'),
-                u_type: $("#txt_type").combobox('getValue')
+                u_type: $("#txt_type").combobox('getValue'),
+                wherestr: $("#txt_SearchId").val() + "," + $("#txt_SearchName").val()
             },
             success: function (mess) {
                 window.open(mess);

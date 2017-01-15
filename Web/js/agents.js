@@ -39,6 +39,7 @@
         queryParams: {
             type: "get",
             wherestr: $("#txt_SearchId").val() + "," + $("#txt_type").combobox('getValue')
+                + "," + $("#txt_SearchName").val() + "," + $("#txt_SearchPhone").val() + "," + $("#txt_State").combobox('getValue')
         },
         columns: [[
                     { field: 'Id', title: '编号', width: 100, align: 'left' },
@@ -102,6 +103,7 @@
         $('#dg').datagrid('load', {
             type: "get",
             wherestr: $("#txt_SearchId").val() + "," + $("#txt_type").combobox('getValue')
+                + "," + $("#txt_SearchName").val() + "," + $("#txt_SearchPhone").val() + "," + $("#txt_State").combobox('getValue')
         });
     });
 

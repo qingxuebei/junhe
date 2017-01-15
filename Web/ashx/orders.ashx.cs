@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Web.ashx
     /// </summary>
     public class orders : Base
     {
-
+        private static readonly ILog logs = LogManager.GetLogger(typeof(orders));
         public override String get(HttpContext context)
         {
             int pageRows, page; String order = "";

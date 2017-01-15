@@ -38,18 +38,8 @@
 	            {
 	                "menuid": "2",
 	                "icon": "icon-sys",
-	                "menuname": "数据汇总",
+	                "menuname": "数据查询",
 	                "menus": [{
-	                    "menuid": "21",
-	                    "menuname": "订单汇总",
-	                    "icon": "icon-nav",
-	                    "url": "/details/hzorders.aspx"
-	                }, {
-	                    "menuid": "21",
-	                    "menuname": "会员收入",
-	                    "icon": "icon-nav",
-	                    "url": "/details/income.aspx"
-	                }, {
 	                    "menuid": "21",
 	                    "menuname": "小组VIP概要",
 	                    "icon": "icon-nav",
@@ -67,9 +57,32 @@
 	                }]
 	            },
                 {
-                    "menuid": "1",
+                    "menuid": "3",
                     "icon": "icon-sys",
-                    "menuname": "内容管理",
+                    "menuname": "数据汇总",
+                    "menus": [
+                        {
+                            "menuid": "21",
+                            "menuname": "月度订单汇总",
+                            "icon": "icon-nav",
+                            "url": "/details/hzorders.aspx"
+                        }, {
+                            "menuid": "21",
+                            "menuname": "月度会员收入",
+                            "icon": "icon-nav",
+                            "url": "/details/income.aspx"
+                        }, {
+                            "menuid": "21",
+                            "menuname": "月度会员概要",
+                            "icon": "icon-nav",
+                            "url": "/details/huiyuanGaiyao.aspx"
+                        }
+                    ]
+                },
+                {
+                    "menuid": "4",
+                    "icon": "icon-sys",
+                    "menuname": "系统管理",
                     "menus": [
                         {
                             "menuid": "3",

@@ -42,6 +42,18 @@ namespace Web.ashx
                     strWhere += " and Rank like 'P%'";
                 }
             }
+            if (!String.IsNullOrWhiteSpace(st[2]))
+            {
+                strWhere += " and Name like '%" + st[2].Trim() + "%'";
+            }
+            if (!String.IsNullOrWhiteSpace(st[3]))
+            {
+                strWhere += " and Phone='" + st[3].Trim() + "'";
+            }
+            if (!String.IsNullOrWhiteSpace(st[4]))
+            {
+                strWhere += " and State=" + Convert.ToInt32(st[4]);
+            }
             if (null != context.Request["rows"])
             {
                 pageRows = int.Parse(context.Request["rows"].ToString().Trim());

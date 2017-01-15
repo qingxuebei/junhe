@@ -35,6 +35,7 @@
                         </select>
                         <span></span>
                         <a href="#" class="easyui-linkbutton" id="lbtn_cpxs" data-options="iconCls:'icon-search'">汇总</a>
+                        <a href="#" class="easyui-linkbutton" id="lbtn_cpxs_export" data-options="iconCls:'icon-excel'">导出</a>
                     </div>
 
                     <div class="easyui-datagrid" id="dg_cpxs"></div>
@@ -61,6 +62,7 @@
                         </select>
                         <span></span>
                         <a href="#" class="easyui-linkbutton" id="lbtn_ydjd" data-options="iconCls:'icon-search'">汇总</a>
+                        <a href="#" class="easyui-linkbutton" id="lbtn_ydjd_export" data-options="iconCls:'icon-excel'">导出</a>
                     </div>
                     <div class="easyui-datagrid" id="dg_ydjd"></div>
                 </div>

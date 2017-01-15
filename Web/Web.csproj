@@ -107,6 +107,7 @@
     <Content Include="details\agents.aspx" />
     <Content Include="details\agentsSelect.aspx" />
     <Content Include="details\backHome.aspx" />
+    <Content Include="details\huiyuanGaiyao.aspx" />
     <Content Include="details\hzorders.aspx" />
     <Content Include="details\income.aspx" />
     <Content Include="details\logMonthCreate.aspx" />
@@ -119,6 +120,7 @@
     <Content Include="js\agents.js" />
     <Content Include="js\agentsSelect.js" />
     <Content Include="js\backHome.js" />
+    <Content Include="js\huiyuanGaiyao.js" />
     <Content Include="js\hzorders.js" />
     <Content Include="js\income.js" />
     <Content Include="js\logMonthCreate.js" />
@@ -140,6 +142,8 @@
     <Content Include="ashx\qyAgencysSelect.ashx" />
     <Content Include="ashx\logMonthCreate.ashx" />
     <Content Include="Log4Net.config" />
+    <Content Include="Template\Dls_Shouru_MX.xls" />
+    <Content Include="ashx\hzorders.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -147,8 +151,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="WebForm1.aspx" />
-    <Content Include="导出模板.xls" />
-    <Content Include="导出模板常规.xls" />
     <Content Include="数据导出.xls" />
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +251,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ashx\hzorders.ashx.cs">
+      <DependentUpon>hzorders.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\logMonthCreate.ashx.cs">
       <DependentUpon>logMonthCreate.ashx</DependentUpon>
     </Compile>
@@ -258,6 +263,13 @@
     </Compile>
     <Compile Include="details\backHome.aspx.designer.cs">
       <DependentUpon>backHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="details\huiyuanGaiyao.aspx.cs">
+      <DependentUpon>huiyuanGaiyao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="details\huiyuanGaiyao.aspx.designer.cs">
+      <DependentUpon>huiyuanGaiyao.aspx</DependentUpon>
     </Compile>
     <Compile Include="details\logMonthCreate.aspx.cs">
       <DependentUpon>logMonthCreate.aspx</DependentUpon>
@@ -386,6 +398,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\icon\" />
+    <Folder Include="DataExport\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
