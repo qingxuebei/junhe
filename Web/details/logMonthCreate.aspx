@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <form id="form1" class="easyui-form">
+    <form id="form1" runat="server" class="easyui-form">
         <div id="div_id" style="display: none">
             <div>
                 <table style="width: 80%; border: 0">

@@ -11,7 +11,11 @@ namespace Web.details
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["Username"] == null)
+            {
+                Response.Redirect("../login.aspx", true);
+                return;
+            }
         }
     }
 }

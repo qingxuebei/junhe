@@ -102,6 +102,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\login.css" />
+    <Content Include="images\buttonbg.png" />
+    <Content Include="js\login.js" />
     <Content Include="details\agencys.aspx" />
     <Content Include="details\agencysSelect.aspx" />
     <Content Include="details\agents.aspx" />
@@ -127,6 +130,7 @@
     <Content Include="js\orders.js" />
     <Content Include="js\products.js" />
     <Content Include="js\qyAgencysSelect.js" />
+    <Content Include="login.aspx" />
     <Content Include="packages.config" />
     <Content Include="css\default.css.bak" />
     <Content Include="ashx\products.ashx" />
@@ -279,6 +283,13 @@
       <DependentUpon>logMonthCreate.aspx</DependentUpon>
     </Compile>
     <Compile Include="LogHelper.cs" />
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

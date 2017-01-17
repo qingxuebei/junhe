@@ -11,16 +11,17 @@ namespace Web.ashx
     /// </summary>
     public class Base : IHttpHandler
     {
-        public String userId, userName;
+        public String userId = "", userName = "";
 
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
             try
             {
-                userId = "123456";
-                userName = "test";
-
+                //if (context.Session["Username"] != null)
+                //{
+                //    userName = context.Session["Username"].ToString();
+                //}
                 switch (context.Request.Params["type"].ToString())
                 {
                     case "get":
