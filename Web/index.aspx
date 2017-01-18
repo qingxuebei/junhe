@@ -138,14 +138,26 @@
                 msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
                 return false;
             }
-
-            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function (msg) {
-                msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
-                $newpass.val('');
-                $rePass.val('');
-                close();
-            })
-
+            $.ajax({
+                datatype: "text",
+                url: "/ashx/Base.ashx?i=" + Math.random(),
+                data: {
+                    type: "editpassword",
+                    oldpwd: $("#Password1").val(),
+                    newpwd: $('#txtNewPass').val()
+                },
+                success: function (mess) {
+                    if (mess == "1") {
+                        msgShow('系统提示', "修改成功！", 'info');
+                        closePwd()
+                    } else {
+                        msgShow('系统提示', mess, 'info');
+                    }
+                    $newpass.val('');
+                    $rePass.val('');
+                    close();
+                }
+            });
         }
 
         $(function () {
@@ -164,10 +176,18 @@
 
             $('#loginOut').click(function () {
                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function (r) {
-
-                    if (r) {
-                        location.href = '/ajax/loginout.ashx';
-                    }
+                    $.ajax({
+                        datatype: "text",
+                        url: "/ashx/Base.ashx?i=" + Math.random(),
+                        data: {
+                            type: "loginout",
+                        },
+                        success: function (mess) {
+                            if (mess) {
+                                location.href = 'login.aspx';
+                            }
+                        }
+                    });
                 });
             })
         });

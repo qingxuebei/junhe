@@ -14,24 +14,21 @@
     <form id="form1" runat="server">
         <div class="pagewrap">
             <div class="main">
-                <div class="header">
+                <div class="header" style="height:100px;">
                 </div>
-                <div class="content">
-                    <div class="con_left"></div>
+                <div class="content" style="padding-left:25%; text-align:center">
                     <div class="con_right">
                         <div class="con_r_top">
                             <a href="javascript:;" class="right" style="color: rgb(51, 51, 51); border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: rgb(46, 85, 142);">用户登录</a>
                         </div>
                         <ul>
-                            <li class="con_r_right" style="display: block;">
+                            <li class="con_r_right" style="display: block; ">
                                 <div class="user">
                                     <div>
-                                        <span class="user-icon"></span>
                                         <input type="text" id="username" name="username" placeholder="　输入账号" value="" runat="server" />
                                     </div>
 
                                     <div>
-                                        <span class="mima-icon"></span>
                                         <input type="password" id="password" name="password" placeholder="　输入密码" value="" runat="server" />
                                     </div>
                                 </div>

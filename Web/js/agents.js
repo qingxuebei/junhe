@@ -86,12 +86,12 @@
                             return '<a href="javascript:void(0);" onclick="update(' + index + ')" style="text-decoration: none;color: #800080;">编辑</a>';
                         }
                     },
-                    {
-                        field: 'operatorb1', title: '详情', align: 'center', width: 70,
-                        formatter: function (value, row, index) {
-                            return '<a href="javascript:void(0);" onclick="detail(' + index + ')" style="text-decoration: none;color: #800080;">详情</a>';
-                        }
-                    }
+                    //{
+                    //    field: 'operatorb1', title: '详情', align: 'center', width: 70,
+                    //    formatter: function (value, row, index) {
+                    //        return '<a href="javascript:void(0);" onclick="detail(' + index + ')" style="text-decoration: none;color: #800080;">详情</a>';
+                    //    }
+                    //}
         ]],
         loadFilter: function (data) {
             if (data)

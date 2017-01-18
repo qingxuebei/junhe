@@ -22,3 +22,15 @@ F:\工作\junhe\DAL\bin\Debug\MyData.pdb
 F:\工作\junhe\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 F:\工作\junhe\DAL\obj\Debug\DAL.dll
 F:\工作\junhe\DAL\obj\Debug\DAL.pdb
+E:\network\junhe\DAL\bin\Debug\DAL.dll
+E:\network\junhe\DAL\bin\Debug\DAL.pdb
+E:\network\junhe\DAL\bin\Debug\Model.dll
+E:\network\junhe\DAL\bin\Debug\MyData.dll
+E:\network\junhe\DAL\bin\Debug\NPOI.dll
+E:\network\junhe\DAL\bin\Debug\dotnetCHARTING.dll
+E:\network\junhe\DAL\bin\Debug\Newtonsoft.Json.dll
+E:\network\junhe\DAL\bin\Debug\Model.pdb
+E:\network\junhe\DAL\bin\Debug\MyData.pdb
+E:\network\junhe\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\network\junhe\DAL\obj\Debug\DAL.dll
+E:\network\junhe\DAL\obj\Debug\DAL.pdb

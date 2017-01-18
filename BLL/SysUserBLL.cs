@@ -12,5 +12,9 @@ namespace BLL
         {
             return new DAL.SysUserDal().getCount(username, password);
         }
+        public bool editPwd(String username, string password)
+        {
+            return new DAL.SysUserDal().editPwd(username, password);
+        }
     }
 }

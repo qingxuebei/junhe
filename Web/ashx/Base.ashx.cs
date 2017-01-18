@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace Web.ashx
 {
     /// <summary>
     /// Base 的摘要说明
     /// </summary>
-    public class Base : IHttpHandler
+    public class Base : IHttpHandler, IRequiresSessionState
     {
         public String userId = "", userName = "";
 
@@ -18,10 +19,11 @@ namespace Web.ashx
             context.Response.ContentType = "text/plain";
             try
             {
-                //if (context.Session["Username"] != null)
-                //{
-                //    userName = context.Session["Username"].ToString();
-                //}
+                if (context.Session["Username"] != null && context.Session["Username"].ToString() != "")
+                {
+                    userName = context.Session["Username"].ToString();
+                }
+
                 switch (context.Request.Params["type"].ToString())
                 {
                     case "get":
@@ -65,6 +67,12 @@ namespace Web.ashx
                         break;
                     case "sumPerson":
                         context.Response.Write(sumPerson(context));
+                        break;
+                    case "loginout":
+                        context.Response.Write(loginout(context));
+                        break;
+                    case "editpassword":
+                        context.Response.Write(editpassword(context));
                         break;
                 }
             }
@@ -181,6 +189,26 @@ namespace Web.ashx
             String str2 = "  State=1 and CreateTime>='" + MyData.Utils.getMonthFirstDay() + "'";
             list.Add(new BLL.AgentsBLL().GetRecordCount(str2));
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+        public String loginout(HttpContext context)
+        {
+            context.Session["Username"] = null;
+            return "1";
+        }
+        public String editpassword(HttpContext context)
+        {
+            String oldpwd = context.Request.Params["oldpwd"].ToString();
+            String newpwd = context.Request.Params["newpwd"].ToString();
+            String username = context.Session["Username"].ToString();
+            if (new BLL.SysUserBLL().getCount(username, oldpwd) > 0)
+            {
+                if (new BLL.SysUserBLL().editPwd(username, newpwd))
+                {
+                    return "1";
+                }
+                else { return "修改失败！"; }
+            }
+            return "原密码错误！";
         }
         public bool IsReusable
         {

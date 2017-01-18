@@ -16,6 +16,10 @@ namespace Web
                 Response.Redirect("login.aspx", true);
                 return;
             }
+            if (!IsCallback)
+            {
+                lbl_NAME.Text = Session["Username"].ToString();
+            }
         }
     }
 }
