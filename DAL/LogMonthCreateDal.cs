@@ -19,7 +19,7 @@ namespace DAL
         {
             String sql = " and YearMonth=" + Utils.getLastYearMonth() + " order by CreateTime desc";
             var list = getLogMonthCreateList(sql);
-            if (list.Count > 0)
+            if (list != null && list.Count > 0)
             {
                 if (list.First().State == (int)MyData.LogMonthCreateState.执行完毕)
                 { return true; }
@@ -30,7 +30,7 @@ namespace DAL
         {
             String sql = @"INSERT INTO [dbo].[LogMonthCreate]
                                    ([Id]
-                                   ,[Name]
+                                   ,[YearMonth]
                                    ,[CreateTime]
                                    ,[CreatePerson]
                                    ,[UpdateTime]
@@ -43,7 +43,7 @@ namespace DAL
                                    ,'{3}'
                                    ,'{4}'
                                    ,'{5}'
-                                   ,{6}";
+                                   ,{6})";
             sql = String.Format(sql, logMonthCreate.Id, logMonthCreate.YearMonth, logMonthCreate.CreateTime, logMonthCreate.CreatePerson, logMonthCreate.UpdateTime,
                 logMonthCreate.UpdatePerson, logMonthCreate.State);
             DataBase.Base_cmd(sql);

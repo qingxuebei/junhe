@@ -29,6 +29,9 @@ namespace Web.ashx
                 log.YearMonth = MyData.Utils.getLastYearMonth();
                 log.CreateTime = DateTime.Now;
                 log.State = (int)MyData.LogMonthCreateState.执行中;
+                log.UpdateTime = DateTime.Now;
+                log.CreatePerson = "dingshi";
+                log.UpdatePerson = "dingshi";
                 new BLL.LogMonthCreateBLL().zhixing(log);
                 return "0";
             }

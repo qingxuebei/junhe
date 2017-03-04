@@ -22,19 +22,22 @@ namespace BLL
             //判断本月是否存在已生成记录
             String sql = " and YearMonth=" + MyData.Utils.getLastYearMonth();
             List<LogMonthCreate> logMonthCreateList = getLogMonthCreateList(sql);
-            if (logMonthCreateList.Count > 0)
+            if (logMonthCreateList!=null &&logMonthCreateList.Count > 0)
             {
                 var logMonthCreate1 = logMonthCreateList.OrderByDescending(o => o.CreateTime).First();
                 if (logMonthCreate1.State != (int)MyData.LogMonthCreateState.执行中)
                 {
-                    DAL.LogMonthCreateDal logdal = new DAL.LogMonthCreateDal();
-                    //step1 添加一条记录到表
-                    logdal.Insert(logMonthCreate);
-                    //执行操作
-                    new BLL.AgentsBLL().jisuan();
-                    //修改状态
-                    logdal.UpdateState(logMonthCreate.Id);
-                    return "执行成功！";
+                    if (logMonthCreate.CreatePerson != "dingshi")
+                    {
+                        DAL.LogMonthCreateDal logdal = new DAL.LogMonthCreateDal();
+                        //step1 添加一条记录到表
+                        logdal.Insert(logMonthCreate);
+                        //执行操作
+                        new BLL.AgentsBLL().jisuan();
+                        //修改状态
+                        logdal.UpdateState(logMonthCreate.Id);
+                        return "执行成功！";
+                    }
                 }
             }
             else
