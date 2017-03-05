@@ -250,7 +250,7 @@ function deleteDetail(index) {
                 $.ajax({
                     datatype: "text",
                     url: "../ashx/ordersdetail.ashx?i=" + Math.random(),
-                    data: { type: "delete", id: row.Id },
+                    data: { type: "delete", id: row.Id, OrdersId: $("#txt_Guid").val() },
                     success: function (mess) {
                         if (mess.indexOf("$") >= 0) {
                             var va = mess.split('$');

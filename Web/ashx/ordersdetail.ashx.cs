@@ -63,11 +63,12 @@ namespace Web.ashx
         public override String del(HttpContext context)
         {
             var id = context.Request.Params["id"].ToString();
+            var orderId = context.Request.Params["OrdersId"].ToString();
             String ids = ""; int nums = 0; decimal allprice = 0;
             if (new BLL.OrdersDetailBLL().Delete(id))
             {
                 Model.OrdersDetail ordersDetail = new Model.OrdersDetail();
-                ordersDetail.OrdersId = id;
+                ordersDetail.OrdersId = orderId;
                 DataTable dd = new BLL.OrdersDetailBLL().GetByOrdersId(ordersDetail);
                 foreach (DataRow dr1 in dd.Rows)
                 {
