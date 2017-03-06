@@ -167,6 +167,7 @@
                 $.messager.alert("提醒", "请至少选择一件产品！", "info");
                 return;
             }
+            $('#lbtn_bd').attr('disabled', "true");
             $.ajax({
                 datatype: "text",
                 url: "../ashx/orders.ashx?i=" + Math.random(),
@@ -181,6 +182,7 @@
                     }
                 }
             });
+            $('#lbtn_bd').removeAttr("disabled");
 
         }
     });

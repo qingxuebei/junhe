@@ -21,7 +21,9 @@ namespace DAL
         }
         public bool Insert(Model.OrdersDetail ordersdetail)
         {
-            String sql = @"INSERT INTO [dbo].[OrdersDetail]
+            if (!String.IsNullOrWhiteSpace(ordersdetail.CreatePerson))
+            {
+                String sql = @"INSERT INTO [dbo].[OrdersDetail]
                            ([Id]
                            ,[OrdersId]
                            ,[ProductId]
@@ -34,9 +36,11 @@ namespace DAL
                            ,[UpdateTime]
                            ,[UpdatePerson],[State])
                      VALUES ('{0}','{1}','{2}','{3}',{4},{5},{6},'{7}','{8}','{9}','{10}',{11} );";
-            sql = String.Format(sql, ordersdetail.Id, ordersdetail.OrdersId, ordersdetail.ProductId, ordersdetail.ProductName, ordersdetail.UnitPrice, ordersdetail.Num,
-                ordersdetail.Price, ordersdetail.CreateTime, ordersdetail.CreatePerson, ordersdetail.UpdateTime, ordersdetail.UpdatePerson, ordersdetail.State);
-            return DataBase.Base_cmd(sql);
+                sql = String.Format(sql, ordersdetail.Id, ordersdetail.OrdersId, ordersdetail.ProductId, ordersdetail.ProductName, ordersdetail.UnitPrice, ordersdetail.Num,
+                    ordersdetail.Price, ordersdetail.CreateTime, ordersdetail.CreatePerson, ordersdetail.UpdateTime, ordersdetail.UpdatePerson, ordersdetail.State);
+                return DataBase.Base_cmd(sql);
+            }
+            return false;
         }
         public bool Delete(String id)
         {

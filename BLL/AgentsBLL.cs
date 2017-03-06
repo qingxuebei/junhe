@@ -46,7 +46,7 @@ namespace BLL
                 }
                 else if (rank.StartsWith("D") || rank.StartsWith("P"))//如果推荐人是代理商或者合伙人，则资深代理商为推荐人
                 {
-                    agents.AgencyId = dt_Agents.Rows[0]["AgentsId"].ToString();
+                    agents.AgencyId = dt_Agents.Rows[0]["Id"].ToString();
                     agents.AgencyName = dt_Agents.Rows[0]["AgentsName"].ToString();
                 }
             }
