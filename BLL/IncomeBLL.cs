@@ -45,7 +45,7 @@ namespace BLL
                 income.AllMonthMoney = orderBLL.getAllMonthPrice(agents.Id, tr);
                 income.State = Convert.ToInt32(MyData.IncomeState.正常);
             }
-            else { income.AllMonthMoney += orders.Price; }
+            income.AllMonthMoney += orders.Price;
             //计算截至目前当月个人订单分成
             income.UpdateTime = DateTime.Now;
             income.UpdatePerson = orders.UpdatePerson;
@@ -318,6 +318,10 @@ namespace BLL
         //计算个人订单分成
         public void jisuanGerenDingdanFencheng(Model.Income income)
         {
+            if (income.AllMonthMoney >= 10000)//当累计订单金额达到10000，rank变为S2，计算个人订单返利，此处只计算个人订单返利
+            {
+                income.Rank = "S2";
+            }
             //VIP顾客无个人订单返利
             if (income.Rank == "S1")
             {
