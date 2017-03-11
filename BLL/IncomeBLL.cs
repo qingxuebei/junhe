@@ -318,14 +318,16 @@ namespace BLL
         //计算个人订单分成
         public void jisuanGerenDingdanFencheng(Model.Income income)
         {
-            if (income.AllMonthMoney >= 10000)//当累计订单金额达到10000，rank变为S2，计算个人订单返利，此处只计算个人订单返利
-            {
-                income.Rank = "S2";
-            }
+
             //VIP顾客无个人订单返利
             if (income.Rank == "S1")
             {
                 income.PersonalServiceMoney = 0;
+                if (income.AllMonthMoney >= 10000)//当累计订单金额达到10000，rank变为S2，计算个人订单返利，此处只计算个人订单返利
+                {
+                    income.Rank = "S2";
+                    income.PersonalServiceMoney = (income.AllMonthMoney - 10000) * (decimal)0.1;
+                }
             }
             else//其他级别一般情况下都是10%
             {
