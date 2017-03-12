@@ -89,5 +89,9 @@ namespace DAL
         {
             return DataBase.Base_dt("select * from Orders where 1=1 " + strWhere);
         }
+        public int getFirstOrderYearMonth(String agentId,int yearMonth, OleDbTransaction tr) {
+            String sql = "select count(1) from Orders where AgentId='" + agentId + "' and State=1 and YearMonth<" + yearMonth;
+            return DataBase.Base_count(sql, tr);
+        }
     }
 }

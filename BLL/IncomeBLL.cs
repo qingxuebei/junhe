@@ -99,7 +99,7 @@ namespace BLL
                     income_t.SalesMoney += orders.Price;
                     income_t.AllSalesMoney += orders.Price;
                     //计算个人VIP顾客销售奖金
-                    jisuanTuijianrenVipJiangjin(income_t);
+                    jisuanTuijianrenVipJiangjin(income_t, tr);
 
                     //如果为代理商，由此订单产生的市场推广服务费加到个人身上
                     if (agents.Rank.StartsWith("P") || agents.Rank.StartsWith("D"))
@@ -332,16 +332,23 @@ namespace BLL
             else//其他级别一般情况下都是10%
             {
                 income.PersonalServiceMoney = income.PersonalMoney * (decimal)0.1;
+                if (income.AllMonthMoney < 10000 && income.Rank.StartsWith("S"))
+                { income.Rank = "S1"; }
             }
         }
         //计算推荐人VIP奖金
-        public void jisuanTuijianrenVipJiangjin(Model.Income income_t)
+        public void jisuanTuijianrenVipJiangjin(Model.Income income_t, OleDbTransaction tr)
         {
             income_t.SalesServiceMoney = income_t.SalesMoney * (decimal)0.1;
-            //如果是S2级别，且连续三个月订单为0，则奖金减半
+            //如果是S2级别，且连续三个月订单为0，则奖金减半(需要判断是不是新进来的代理人，如果是新进来的，则不看前三个月的订单)
             if (income_t.Rank == "S2" && income_t.NearlyThreeMonthsMoney == 0)
             {
-                income_t.SalesServiceMoney = income_t.SalesServiceMoney * (decimal)0.5;
+                //判断本月之前的正常订单数，如果订单数为0则表示是新进来的代理人
+                int count = new BLL.OrdersBLL().getFirstOrderYearMonth(income_t.AgencyId, MyData.Utils.getYearMonth(), tr);
+                if (count > 0)
+                {
+                    income_t.SalesServiceMoney = income_t.SalesServiceMoney * (decimal)0.5;
+                }
             }
         }
         //计算市场推广服务费
@@ -418,6 +425,7 @@ namespace BLL
                     {
                         agents.Rank = "S2";
                     }
+                    else { agents.Rank = "S1"; }
                 }
                 new DAL.AgentsDal().UpdateAgents(agents);
             }

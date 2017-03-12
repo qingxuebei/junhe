@@ -152,5 +152,9 @@ namespace BLL
         {
             return new DAL.OrdersDal().getOrdersByObject(strWhere);
         }
+        public int getFirstOrderYearMonth(String agentId, int yearMonth, OleDbTransaction tr)
+        {
+            return new DAL.OrdersDal().getFirstOrderYearMonth(agentId, yearMonth, tr);
+        }
     }
 }
