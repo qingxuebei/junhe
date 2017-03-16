@@ -427,6 +427,7 @@ namespace BLL
                     }
                     else { agents.Rank = "S1"; }
                 }
+                else { agents.Rank = "S1"; }
                 new DAL.AgentsDal().UpdateAgents(agents);
             }
         }
