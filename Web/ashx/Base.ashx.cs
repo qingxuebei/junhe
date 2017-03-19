@@ -23,6 +23,7 @@ namespace Web.ashx
                 {
                     userName = context.Session["Username"].ToString();
                 }
+                else { return; }
 
                 switch (context.Request.Params["type"].ToString())
                 {

@@ -331,7 +331,14 @@ namespace BLL
             }
             else//其他级别一般情况下都是10%
             {
-                income.PersonalServiceMoney = income.PersonalMoney * (decimal)0.1;
+                if (income.AllMonthMoney >= 10000)
+                {
+                    if (income.AllMonthMoney - income.PersonalMoney >= 10000)
+                    { income.PersonalServiceMoney = income.PersonalMoney * (decimal)0.1; }
+                    else { income.PersonalServiceMoney = (income.AllMonthMoney - 10000) * (decimal)0.1; }
+                }
+                else { income.PersonalServiceMoney = 0; }
+                    
                 if (income.AllMonthMoney < 10000 && income.Rank.StartsWith("S"))
                 { income.Rank = "S1"; }
             }

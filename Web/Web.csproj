@@ -117,7 +117,6 @@
     <Content Include="details\orders.aspx" />
     <Content Include="details\products.aspx" />
     <Content Include="details\qyAgencysSelect.aspx" />
-    <Content Include="Global.asax" />
     <Content Include="js\agencys.js" />
     <Content Include="js\agencysSelect.js" />
     <Content Include="js\agents.js" />
@@ -391,9 +390,6 @@
     </Compile>
     <Compile Include="details\qyAgencysSelect.aspx.designer.cs">
       <DependentUpon>qyAgencysSelect.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
