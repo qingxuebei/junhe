@@ -12,7 +12,7 @@ namespace BLL
 {
     public class OrdersBLL
     {
-        public bool Insert(Model.Orders orders)
+        public bool Insert(Model.Orders orders,String ordersId)
         {
             bool ok;
             DAL.OrdersDal ordersDal = new DAL.OrdersDal();
@@ -22,7 +22,7 @@ namespace BLL
             try
             {
                 //先把订单添加到数据库
-                ordersDal.Insert(orders, tr);
+                ordersDal.Insert(orders, ordersId, tr);
                 new IncomeBLL().alljisuan(orders, tr);
                 tr.Commit();
                 ok = true;
@@ -155,6 +155,10 @@ namespace BLL
         public int getFirstOrderYearMonth(String agentId, int yearMonth, OleDbTransaction tr)
         {
             return new DAL.OrdersDal().getFirstOrderYearMonth(agentId, yearMonth, tr);
+        }
+        public String getLastId()
+        {
+            return new DAL.OrdersDal().getLastId();
         }
     }
 }

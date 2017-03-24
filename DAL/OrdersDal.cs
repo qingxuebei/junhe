@@ -12,7 +12,7 @@ namespace DAL
 {
     public class OrdersDal
     {
-        public bool Insert(Model.Orders orders, OleDbTransaction tr)
+        public bool Insert(Model.Orders orders, String ordersId, OleDbTransaction tr)
         {
             String sql1 = @"INSERT INTO [dbo].[Orders]
                            ([Id]
@@ -28,7 +28,7 @@ namespace DAL
                      VALUES ('{0}','{1}','{2}','{3}',{4},'{5}','{6}','{7}','{8}',{9},'{10}');";
             sql1 = String.Format(sql1, orders.Id, orders.AgentId, orders.AgentName, orders.YearMonth, orders.Price, orders.CreateTime, orders.CreatePerson, orders.UpdateTime, orders.UpdatePerson, orders.State, orders.YearMonthDate);
 
-            String sql2 = "update OrdersDetail set State=1 where OrdersId='" + orders.Id + "'";
+            String sql2 = "update OrdersDetail set State=1,OrdersId='" + orders.Id + "' where OrdersId='" + ordersId + "'";
             MyData.DataBase.Base_cmd(sql1 + sql2, tr);
             return true;
         }
@@ -89,9 +89,15 @@ namespace DAL
         {
             return DataBase.Base_dt("select * from Orders where 1=1 " + strWhere);
         }
-        public int getFirstOrderYearMonth(String agentId,int yearMonth, OleDbTransaction tr) {
+        public int getFirstOrderYearMonth(String agentId, int yearMonth, OleDbTransaction tr)
+        {
             String sql = "select count(1) from Orders where AgentId='" + agentId + "' and State=1 and YearMonth<" + yearMonth;
             return DataBase.Base_count(sql, tr);
+        }
+        public String getLastId()
+        {
+            String sql = "select top(1) id from Orders order by id desc";
+            return DataBase.Base_Scalar(sql);
         }
     }
 }

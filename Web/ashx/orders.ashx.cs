@@ -63,7 +63,17 @@ namespace Web.ashx
             {
                 return "代理人不存在";
             }
-            orders.Id = OrdersId;
+            String yearMonth = DateTime.Now.ToString("yyMM");
+            String id = yearMonth + "0001";
+            String oldId = new BLL.OrdersBLL().getLastId();
+            if (!String.IsNullOrWhiteSpace(oldId))
+            {
+                if (oldId.StartsWith(yearMonth))
+                {
+                    id = (Convert.ToInt32(oldId) + 1).ToString();
+                }
+            }
+            orders.Id = id;
             orders.Price = Convert.ToDecimal(Price);
             orders.AgentName = dt.Rows[0]["AgentsName"].ToString();
             orders.State = Convert.ToInt32(MyData.OrdersState.正常);
@@ -74,7 +84,7 @@ namespace Web.ashx
             orders.UpdateTime = DateTime.Now;
             orders.YearMonth = MyData.Utils.getYearMonth();
             orders.YearMonthDate = DateTime.Now;
-            if (new BLL.OrdersBLL().Insert(orders))
+            if (new BLL.OrdersBLL().Insert(orders, OrdersId))
             {
                 return "0";
             }
