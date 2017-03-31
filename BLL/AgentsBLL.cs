@@ -213,18 +213,18 @@ namespace BLL
                         {
                             //判断一级代理商的数量
                             List<Agents> agentsList1 = agentsList.FindAll(o => o.AgencyId == agents.Id && o.Rank.StartsWith("D"));
-                            if (agentsList1.Count == 0) { agents.Rank = "S1"; }
+                            if (agentsList1.Count == 0) { agents.Rank = "D1"; }
                             else if (agentsList1.Count >= 1 && agentsList1.Count <= 2)
                             {
-                                agents.Rank = "S2";
+                                agents.Rank = "D2";
                             }
                             else if (agentsList1.Count >= 3 && agentsList1.Count <= 4)
                             {
-                                agents.Rank = "S3";
+                                agents.Rank = "D3";
                             }
                             else if (agentsList1.Count >= 5)
                             {
-                                agents.Rank = "S4";
+                                agents.Rank = "D4";
                                 int count2 = 0;
                                 int count3 = 0;
                                 //判断二级代理商和三级代理商
@@ -243,7 +243,7 @@ namespace BLL
                                 }
                                 if (agentsList1.Count + count2 >= 20 && agentsList1.Count + count2 + count3 >= 50)
                                 {
-                                    agents.Rank = "S5";
+                                    agents.Rank = "D5";
                                 }
                             }
                         }

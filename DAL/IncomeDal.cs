@@ -26,7 +26,7 @@ namespace DAL
         }
         public List<Income> getIncomeList(String strWhere, OleDbTransaction tr)
         {
-            return MyData.DataBase.Base_list<Income>("select * from Income where 1=1 " + strWhere,tr);
+            return MyData.DataBase.Base_list<Income>("select * from Income where 1=1 " + strWhere, tr);
         }
         public Decimal getLastAllSalesMoney(String str_sql, OleDbTransaction tr)
         {
@@ -69,7 +69,7 @@ namespace DAL
                                ,[RegionServiceMoney]
                                ,[RegionYum]
                                ,[RegionServiceYum]
-                               ,[IncomeMoney])
+                               ,[IncomeMoney],[AllSalesMoney])
                          VALUES ({0} ,'{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'
                                    ,'{11}','{12}',{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30});";
                 sql = String.Format(sql, income.YearMonth
@@ -102,7 +102,7 @@ namespace DAL
                                             , income.RegionServiceMoney
                                             , income.RegionYum
                                             , income.RegionServiceYum
-                                            , income.IncomeMoney);
+                                            , income.IncomeMoney, income.AllSalesMoney);
 
                 DataBase.Base_cmd(sql, tr);
             }
@@ -138,6 +138,7 @@ namespace DAL
                                   ,[RegionYum] = {26}
                                   ,[RegionServiceYum] = {27}
                                   ,[IncomeMoney] = {28}
+                                  ,[AllSalesMoney]={29}
                              WHERE YearMonth=" + income.YearMonth + " and AgentId='" + income.AgentId + "'";
                 sql = String.Format(sql, income.AgentName
                                             , income.CareerStatus
@@ -167,7 +168,7 @@ namespace DAL
                                             , income.RegionServiceMoney
                                             , income.RegionYum
                                             , income.RegionServiceYum
-                                            , income.IncomeMoney);
+                                            , income.IncomeMoney, income.AllSalesMoney);
                 DataBase.Base_cmd(sql, tr);
             }
         }
