@@ -113,7 +113,7 @@ namespace BLL
                                 if (income.AllMonthMoney >= 10000 && income.AllSalesMoney >= 50000)
                                 {
                                     agents.Rank = "D1";
-                                    jisuanAgentsToAgency(incomeList, agentsList, agents);
+                                    jisuanAgentsToAgency(incomeList, agentsList, agents, agents);
                                 }
                             }
                             else
@@ -255,7 +255,7 @@ namespace BLL
 
         }
         //代理人升级为代理商时，其下的代理人的代理商都要变
-        private void jisuanAgentsToAgency(List<Income> incomeList, List<Agents> fAgentsList, Agents fAgenct)
+        private void jisuanAgentsToAgency(List<Income> incomeList, List<Agents> fAgentsList, Agents fAgenct, Agents useAgent)
         {
             List<Agents> zAgentsList = fAgentsList.FindAll(o => o.RefereeId == fAgenct.Id);
             if (zAgentsList.Count > 0)
@@ -265,9 +265,9 @@ namespace BLL
                     if (agents.Rank.StartsWith("S"))
                     {
                         Agents zagents = fAgentsList.Find(o => o.Id == agents.Id);
-                        zagents.AgencyId = fAgenct.Id;
-                        zagents.AgencyName = fAgenct.Name;
-                        jisuanAgentsToAgency(incomeList, fAgentsList, agents);
+                        zagents.AgencyId = useAgent.Id;
+                        zagents.AgencyName = useAgent.Name;
+                        jisuanAgentsToAgency(incomeList, fAgentsList, agents, useAgent);
                     }
                 }
             }
