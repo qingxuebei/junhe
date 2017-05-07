@@ -40,7 +40,9 @@ namespace BLL
                 income.CreateTime = DateTime.Now;
                 income.CreatePerson = orders.CreatePerson;
                 income.LastMonthMoney = orderBLL.getOneMonthPrice(agents.Id, tr);
+                income.NearlyTwoMonthsMoney = orderBLL.getTwoMonthPrice(agents.Id, tr);
                 income.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents.Id, tr);
+                income.NearlyFiveMonthsMoney = orderBLL.getFiveMonthPrice(agents.Id, tr);
                 income.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents.Id, tr);
                 income.AllMonthMoney = orderBLL.getAllMonthPrice(agents.Id, tr);
                 income.State = Convert.ToInt32(MyData.IncomeState.正常);
@@ -144,7 +146,9 @@ namespace BLL
                             income_s.CreateTime = DateTime.Now;
                             income_s.UpdateTime = DateTime.Now;
                             income_s.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s.Id, tr);
+                            income_s.NearlyTwoMonthsMoney = orderBLL.getTwoMonthPrice(agents_s.Id, tr);
                             income_s.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s.Id, tr);
+                            income_s.NearlyFiveMonthsMoney = orderBLL.getFiveMonthPrice(agents_s.Id, tr);
                             income_s.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s.Id, tr);
                             income_s.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s.Id, tr);
                             income_s.State = Convert.ToInt32(MyData.IncomeState.正常);
@@ -200,7 +204,9 @@ namespace BLL
                             income_s1.CreateTime = DateTime.Now;
                             income_s1.UpdateTime = DateTime.Now;
                             income_s1.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s1.Id, tr);
+                            income_s1.NearlyTwoMonthsMoney = orderBLL.getTwoMonthPrice(agents_s1.Id, tr);
                             income_s1.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s1.Id, tr);
+                            income_s1.NearlyFiveMonthsMoney = orderBLL.getFiveMonthPrice(agents_s1.Id, tr);
                             income_s1.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s1.Id, tr);
                             income_s1.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s1.Id, tr);
                             income_s1.State = Convert.ToInt32(MyData.IncomeState.正常);
@@ -245,7 +251,9 @@ namespace BLL
                                     income_s2.CreateTime = DateTime.Now;
                                     income_s2.UpdateTime = DateTime.Now;
                                     income_s2.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s2.Id, tr);
+                                    income_s2.NearlyTwoMonthsMoney = orderBLL.getTwoMonthPrice(agents_s2.Id, tr);
                                     income_s2.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s2.Id, tr);
+                                    income_s2.NearlyFiveMonthsMoney = orderBLL.getFiveMonthPrice(agents_s2.Id, tr);
                                     income_s2.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s2.Id, tr);
                                     income_s2.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s2.Id, tr);
                                     income_s2.State = Convert.ToInt32(MyData.IncomeState.正常);
@@ -288,7 +296,9 @@ namespace BLL
                                         income_s3.CreateTime = DateTime.Now;
                                         income_s3.UpdateTime = DateTime.Now;
                                         income_s3.LastMonthMoney = orderBLL.getOneMonthPrice(agents_s3.Id, tr);
+                                        income_s3.NearlyTwoMonthsMoney = orderBLL.getTwoMonthPrice(agents_s3.Id, tr);
                                         income_s3.NearlyThreeMonthsMoney = orderBLL.getThreeMonthPrice(agents_s3.Id, tr);
+                                        income_s3.NearlyFiveMonthsMoney = orderBLL.getFiveMonthPrice(agents_s3.Id, tr);
                                         income_s3.NearlySixMonthsMoney = orderBLL.getSixMonthPrice(agents_s3.Id, tr);
                                         income_s3.AllMonthMoney = orderBLL.getAllMonthPrice(agents_s3.Id, tr);
                                         income_s3.State = Convert.ToInt32(MyData.IncomeState.正常);
@@ -338,7 +348,7 @@ namespace BLL
                     else { income.PersonalServiceMoney = (income.AllMonthMoney - 10000) * (decimal)0.1; }
                 }
                 else { income.PersonalServiceMoney = 0; }
-                    
+
                 if (income.AllMonthMoney < 10000 && income.Rank.StartsWith("S"))
                 { income.Rank = "S1"; }
             }

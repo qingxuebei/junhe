@@ -209,44 +209,44 @@ namespace BLL
                     Income income = incomeList.Find(o => o.AgentId == agents.Id);
                     if (income != null && !String.IsNullOrWhiteSpace(income.AgentId))
                     {   //判断上月订单大于等于1000时
-                        if (income.PersonalMoney >= (decimal)1000)
+                        //if (income.PersonalMoney >= (decimal)1000)
+                        //{
+                        //判断一级代理商的数量
+                        List<Agents> agentsList1 = agentsList.FindAll(o => o.AgencyId == agents.Id && o.Rank.StartsWith("D"));
+                        if (agentsList1.Count == 0) { agents.Rank = "D1"; }
+                        else if (agentsList1.Count >= 1 && agentsList1.Count <= 2)
                         {
-                            //判断一级代理商的数量
-                            List<Agents> agentsList1 = agentsList.FindAll(o => o.AgencyId == agents.Id && o.Rank.StartsWith("D"));
-                            if (agentsList1.Count == 0) { agents.Rank = "D1"; }
-                            else if (agentsList1.Count >= 1 && agentsList1.Count <= 2)
+                            agents.Rank = "D2";
+                        }
+                        else if (agentsList1.Count >= 3 && agentsList1.Count <= 4)
+                        {
+                            agents.Rank = "D3";
+                        }
+                        else if (agentsList1.Count >= 5)
+                        {
+                            agents.Rank = "D4";
+                            int count2 = 0;
+                            int count3 = 0;
+                            //判断二级代理商和三级代理商
+                            foreach (Agents agents1 in agentsList1)
                             {
-                                agents.Rank = "D2";
-                            }
-                            else if (agentsList1.Count >= 3 && agentsList1.Count <= 4)
-                            {
-                                agents.Rank = "D3";
-                            }
-                            else if (agentsList1.Count >= 5)
-                            {
-                                agents.Rank = "D4";
-                                int count2 = 0;
-                                int count3 = 0;
-                                //判断二级代理商和三级代理商
-                                foreach (Agents agents1 in agentsList1)
+                                List<Agents> agentsList2 = agentsList.FindAll(o => o.AgencyId == agents1.Id && o.Rank.StartsWith("D"));
+                                if (agentsList2.Count > 0)
                                 {
-                                    List<Agents> agentsList2 = agentsList.FindAll(o => o.AgencyId == agents1.Id && o.Rank.StartsWith("D"));
-                                    if (agentsList2.Count > 0)
+                                    count2 += agentsList2.Count;
+                                    foreach (Agents agents2 in agentsList2)
                                     {
-                                        count2 += agentsList2.Count;
-                                        foreach (Agents agents2 in agentsList2)
-                                        {
-                                            List<Agents> agentsList3 = agentsList.FindAll(o => o.AgencyId == agents2.Id && o.Rank.StartsWith("D"));
-                                            count3 += agentsList3.Count;
-                                        }
+                                        List<Agents> agentsList3 = agentsList.FindAll(o => o.AgencyId == agents2.Id && o.Rank.StartsWith("D"));
+                                        count3 += agentsList3.Count;
                                     }
                                 }
-                                if (agentsList1.Count + count2 >= 20 && agentsList1.Count + count2 + count3 >= 50)
-                                {
-                                    agents.Rank = "D5";
-                                }
+                            }
+                            if (agentsList1.Count + count2 >= 20 && agentsList1.Count + count2 + count3 >= 50)
+                            {
+                                agents.Rank = "D5";
                             }
                         }
+                        //}
                     }
                 }
             }
