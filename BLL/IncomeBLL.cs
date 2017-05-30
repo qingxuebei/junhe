@@ -186,7 +186,7 @@ namespace BLL
                     {
                         isTrue = true;
                         Model.Income income_s1 = new Income();
-                        income_s1 = incomeDal.getIncomebyId(orders.YearMonth, agents_s1.AgencyId, tr);
+                        income_s1 = incomeDal.getIncomebyId(orders.YearMonth, agents_s1.Id, tr);
 
                         if (income_s1 == null || String.IsNullOrWhiteSpace(income_s1.AgentId))
                         {
@@ -233,7 +233,7 @@ namespace BLL
                             {
                                 isTrue = true;
                                 Model.Income income_s2 = new Income();
-                                income_s2 = incomeDal.getIncomebyId(orders.YearMonth, agents_s2.AgencyId, tr);
+                                income_s2 = incomeDal.getIncomebyId(orders.YearMonth, agents_s2.Id, tr);
 
                                 if (income_s2 == null || String.IsNullOrWhiteSpace(income_s2.AgentId))
                                 {
@@ -278,7 +278,7 @@ namespace BLL
                                 {
                                     isTrue = true;
                                     Model.Income income_s3 = new Income();
-                                    income_s3 = incomeDal.getIncomebyId(orders.YearMonth, agents_s3.AgencyId, tr);
+                                    income_s3 = incomeDal.getIncomebyId(orders.YearMonth, agents_s3.Id, tr);
 
                                     if (income_s3 == null || String.IsNullOrWhiteSpace(income_s3.AgentId))
                                     {
